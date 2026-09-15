@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Painel — Mesa Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" />
+ 
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-dashboard="BENEFICIARIO" data-autenticacao-ativa="true">
+    <header class="cabecalho-perfil">
+      <div class="conteiner-navbar-perfil">
+
+        
+        <a href="index.html" class="logo-perfil-link">
+          <img src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg" alt="Logo Mesa Solidária" class="imagem-logo-perfil" />
+        </a>
+
+        
+        <nav class="menu-perfil">
+          <a href="dashboard_beneficiario.html" class="item-menu-perfil ativo">🏠 Meu Painel</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-perfil">👤 Meu Perfil</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-solicitacoes">📦 Minhas Solicitações</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-ajuda">❓ Ajuda</a>
+        </nav>
+
+        
+        <div class="acoes-perfil">
+          <div class="sino-notificacao" id="sino" title="Notificações">
+            🔔
+            <span class="badge-sino" id="badge-sino">0</span>
+          </div>
+          <div class="painel-notificacoes" id="painel-notificacoes">
+            <div class="cabecalho-notificacoes">Notificações</div>
+            <div class="lista-notificacoes" id="lista-notificacoes">
+              <div class="sem-notificacoes" id="sem-notificacoes">Nenhuma notificação ainda</div>
+            </div>
+          </div>
+          <div class="chip-usuario">
+            <div class="avatar-chip" id="avatar-chip">B</div>
+            <span id="nome-chip">Beneficiário</span>
+          </div>
+          <a href="login.html" class="botao-sair-nav">Sair →</a>
+        </div>
+
+      </div>
+    </header>
+
+    <main class="pagina-dashboard">
+
+      
+      <div class="boas-vindas">
+        <div class="avatar-usuario" id="avatar-inicial">B</div>
+        <div class="texto-boas-vindas">
+          <h1 id="titulo-boas-vindas">Olá, Beneficiário!</h1>
+          <p>Bem-vindo ao seu painel pessoal</p>
+        </div>
+        <span class="badge-status">Cadastro ativo</span>
+        <button class="btn-nova-solicitacao" id="btn-abrir-form-solicitacao">+ Nova solicitação</button>
+      </div>
+
+      
+      <div class="grade-resumo">
+        <div class="card-resumo destaque">
+          <div class="label-card">Doações recebidas</div>
+          <div class="valor-card">12</div>
+          <div class="detalhe-card">desde o cadastro</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Próxima retirada</div>
+          <div class="valor-card">28 set</div>
+          <div class="detalhe-card">Ponto Centro — 09h às 12h</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Pontos de coleta próximos</div>
+          <div class="valor-card">4</div>
+          <div class="detalhe-card">na sua região</div>
+        </div>
+      </div>
+
+      
+      <h2 class="secao-titulo">Próxima doação agendada</h2>
+      <div class="card-proxima-doacao">
+        <div class="data-doacao">
+          <div class="mes">Mai</div>
+          <div class="dia">28</div>
+        </div>
+        <div class="info-doacao">
+          <h3>Cesta básica + Itens de higiene</h3>
+          <p>Ponto de Coleta Centro &bull; Rua das Flores, 100 &bull; 09h às 12h</p>
+        </div>
+        <span class="badge-disponivel">Disponível</span>
+      </div>
+
+      
+      <h2 class="secao-titulo">Pontos de coleta próximos</h2>
+      <div class="card-mapa">
+        <div class="legenda-mapa">
+          <div class="item-legenda">
+            <div class="bolinha-legenda" style="background:#2e8b57;"></div>
+            Itens disponíveis
+          </div>
+          <div class="item-legenda">
+            <div class="bolinha-legenda" style="background:#e53935;"></div>
+            Sem itens no momento
+          </div>
+        </div>
+        <div id="mapa-pontos-coleta"></div>
+      </div>
+
+      
+      <h2 class="secao-titulo">Histórico de doações</h2>
+      <div class="card-historico">
+        <table class="tabela-historico">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Itens recebidos</th>
+              <th>Ponto de coleta</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>28/05/2026</td>
+              <td>Cesta básica + Higiene</td>
+              <td>Ponto Centro</td>
+              <td><span class="tag-agendado">Agendado</span></td>
+            </tr>
+            <tr>
+              <td>30/04/2026</td>
+              <td>Cesta básica</td>
+              <td>Ponto Norte</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>31/03/2026</td>
+              <td>Cesta básica + Roupas</td>
+              <td>Ponto Sul</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>28/02/2026</td>
+              <td>Cesta básica</td>
+              <td>Ponto Centro</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>31/01/2026</td>
+              <td>Cesta básica + Brinquedos</td>
+              <td>Ponto Leste</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+    
+    <div class="modal-form-overlay" id="modal-form-overlay">
+      <div class="modal-form-caixa">
+        <div class="modal-form-cabecalho">
+          <h2 class="modal-form-titulo">Nova Solicitação</h2>
+          <button class="gaveta-fechar" id="modal-form-fechar" aria-label="Fechar">✕</button>
+        </div>
+        <div class="modal-form-corpo">
+
+          <div class="form-grupo">
+            <label class="form-label">Itens necessários <span class="form-obrigatorio">*</span></label>
+            <div class="form-checkboxes">
+              <label class="form-check"><input type="checkbox" name="itens" value="cesta" /> Cesta básica</label>
+              <label class="form-check"><input type="checkbox" name="itens" value="higiene" /> Itens de higiene</label>
+              <label class="form-check"><input type="checkbox" name="itens" value="roupas" /> Roupas e calçados</label>
+              <label class="form-check"><input type="checkbox" name="itens" value="brinquedos" /> Brinquedos</label>
+            </div>
+          </div>
+
+          <div class="form-grupo">
+            <label class="form-label">Como prefere receber? <span class="form-obrigatorio">*</span></label>
+            <div class="form-radios">
+              <label class="form-radio"><input type="radio" name="modalidade" value="retirada" /> 🚶 Retirada no ponto</label>
+              <label class="form-radio"><input type="radio" name="modalidade" value="entrega" /> 🏠 Entrega em casa por voluntário</label>
+            </div>
+          </div>
+
+          <div class="form-linha">
+            <div class="form-grupo" id="grupo-ponto">
+              <label class="form-label" for="form-ponto">Ponto de coleta <span class="form-obrigatorio">*</span></label>
+              <select class="form-select" id="form-ponto">
+                <option value="">Selecione um ponto...</option>
+                <option value="centro">Ponto Centro</option>
+                <option value="norte">Ponto Norte</option>
+                <option value="sul">Ponto Sul</option>
+                <option value="leste">Ponto Leste</option>
+                <option value="oeste">Ponto Oeste</option>
+                <option value="bom-retiro">Ponto Bom Retiro</option>
+                <option value="bras">Ponto Brás</option>
+                <option value="tatuape">Ponto Tatuapé</option>
+                <option value="pinheiros">Ponto Pinheiros</option>
+                <option value="santana">Ponto Santana</option>
+              </select>
+            </div>
+            <div class="form-grupo">
+              <label class="form-label" for="form-data">Data preferida <span class="form-sugestao">(sugestão)</span></label>
+              <input class="form-input" type="date" id="form-data" />
+            </div>
+          </div>
+
+          <div class="form-grupo">
+            <label class="form-label" for="form-obs">Observações</label>
+            <textarea class="form-textarea" id="form-obs" rows="3" placeholder="Alguma necessidade específica? Restrições alimentares, tamanho de roupa..."></textarea>
+          </div>
+
+          <p class="form-aviso">⚠️ Solicitações estão sujeitas à disponibilidade de itens no ponto escolhido.</p>
+        </div>
+        <div class="modal-form-rodape">
+          <button class="gaveta-btn-cancelar" id="modal-form-cancelar">Cancelar</button>
+          <button class="gaveta-btn-salvar" id="modal-form-enviar">📋 Enviar solicitação</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-ajuda">
+      <div class="gaveta-cabecalho">
+        <div>
+          <h2 class="gaveta-titulo">Central de Ajuda</h2>
+          <p class="gaveta-subtitulo">Fale com nosso SAC</p>
+        </div>
+        <button class="gaveta-fechar" id="gaveta-ajuda-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+
+        
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Enviar mensagem</div>
+
+          <div class="form-grupo">
+            <label class="form-label" for="sac-assunto">Assunto <span class="form-obrigatorio">*</span></label>
+            <select class="form-select" id="sac-assunto">
+              <option value="">Selecione um assunto...</option>
+              <option value="duvida">Dúvida geral</option>
+              <option value="solicitacao">Problema com solicitação</option>
+              <option value="cadastro">Atualização de cadastro</option>
+              <option value="entrega">Problema com entrega</option>
+              <option value="cancelamento">Cancelamento de solicitação</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-grupo">
+            <label class="form-label" for="sac-mensagem">Mensagem <span class="form-obrigatorio">*</span></label>
+            <textarea class="form-textarea" id="sac-mensagem" rows="5" placeholder="Descreva sua dúvida ou problema com o máximo de detalhes possível..."></textarea>
+          </div>
+
+          <p class="form-aviso">🕒 Tempo médio de resposta: <strong>1 a 2 dias úteis</strong>. Você será notificado por e-mail.</p>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-cancelar" id="gaveta-ajuda-cancelar">Cancelar</button>
+        <button class="gaveta-btn-salvar" id="gaveta-ajuda-enviar">📨 Enviar mensagem</button>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-solicitacoes">
+      <div class="gaveta-cabecalho">
+        <h2 class="gaveta-titulo">Minhas Solicitações</h2>
+        <button class="gaveta-fechar" id="gaveta-solicitacoes-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+
+        
+        <div class="solicit-resumo">
+          <div class="solicit-resumo-item">
+            <span class="solicit-resumo-valor">12</span>
+            <span class="solicit-resumo-label">Total recebidas</span>
+          </div>
+          <div class="solicit-resumo-item">
+            <span class="solicit-resumo-valor" style="color:#f59e0b;">1</span>
+            <span class="solicit-resumo-label">Agendada</span>
+          </div>
+          <div class="solicit-resumo-item">
+            <span class="solicit-resumo-valor" style="color:#2e8b57;">11</span>
+            <span class="solicit-resumo-label">Entregues</span>
+          </div>
+        </div>
+
+        
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Histórico de solicitações</div>
+
+          <div class="solicit-item">
+            <div class="solicit-data"><span class="solicit-mes">Mai</span><span class="solicit-dia">28</span></div>
+            <div class="solicit-info">
+              <strong>Cesta básica + Higiene</strong>
+              <span>Ponto Centro &bull; 09h às 12h</span>
+            </div>
+            <span class="tag-agendado">Agendado</span>
+          </div>
+
+          <div class="solicit-item">
+            <div class="solicit-data"><span class="solicit-mes">Abr</span><span class="solicit-dia">30</span></div>
+            <div class="solicit-info">
+              <strong>Cesta básica</strong>
+              <span>Ponto Norte</span>
+            </div>
+            <span class="tag-entregue">Entregue</span>
+          </div>
+
+          <div class="solicit-item">
+            <div class="solicit-data"><span class="solicit-mes">Mar</span><span class="solicit-dia">31</span></div>
+            <div class="solicit-info">
+              <strong>Cesta básica + Roupas</strong>
+              <span>Ponto Sul</span>
+            </div>
+            <span class="tag-entregue">Entregue</span>
+          </div>
+
+          <div class="solicit-item">
+            <div class="solicit-data"><span class="solicit-mes">Fev</span><span class="solicit-dia">28</span></div>
+            <div class="solicit-info">
+              <strong>Cesta básica</strong>
+              <span>Ponto Centro</span>
+            </div>
+            <span class="tag-entregue">Entregue</span>
+          </div>
+
+          <div class="solicit-item">
+            <div class="solicit-data"><span class="solicit-mes">Jan</span><span class="solicit-dia">31</span></div>
+            <div class="solicit-info">
+              <strong>Cesta básica + Brinquedos</strong>
+              <span>Ponto Leste</span>
+            </div>
+            <span class="tag-entregue">Entregue</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-salvar" id="btn-nova-solicitacao">+ Nova solicitação</button>
+      </div>
+    </aside>
+
+    
+    <div class="gaveta-overlay" id="gaveta-overlay"></div>
+    <aside class="gaveta-perfil" id="gaveta-perfil">
+      <div class="gaveta-cabecalho">
+        <h2 class="gaveta-titulo">Meu Perfil</h2>
+        <button class="gaveta-fechar" id="gaveta-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+
+        
+        <div class="gaveta-avatar-bloco">
+          <div class="gaveta-avatar" id="gaveta-avatar">B</div>
+          <div>
+            <div class="gaveta-nome-exibido" id="gaveta-nome-exibido">Maria da Silva</div>
+            <span class="badge-status" style="margin-left:0;">Cadastro ativo</span>
+          </div>
+        </div>
+
+        
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Informações pessoais</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-nome">Nome completo</label>
+              <input class="gaveta-input" id="gv-nome" type="text" value="Maria da Silva" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-email">E-mail</label>
+              <input class="gaveta-input" id="gv-email" type="email" value="beneficiario@beneficiario.com" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-telefone">Telefone</label>
+              <input class="gaveta-input" id="gv-telefone" type="tel" value="(11) 98765-4321" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-cpf">CPF</label>
+              <input class="gaveta-input" id="gv-cpf" type="text" value="•••.•••.•••-12" disabled />
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Endereço</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo" style="grid-column: span 2;">
+              <label class="gaveta-label" for="gv-rua">Rua / Avenida</label>
+              <input class="gaveta-input" id="gv-rua" type="text" value="Rua das Palmeiras, 45" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-bairro">Bairro</label>
+              <input class="gaveta-input" id="gv-bairro" type="text" value="Vila Mariana" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-cidade">Cidade</label>
+              <input class="gaveta-input" id="gv-cidade" type="text" value="São Paulo" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-cep">CEP</label>
+              <input class="gaveta-input" id="gv-cep" type="text" value="04101-000" disabled />
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Informações familiares</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-responsavel">Responsável pela família</label>
+              <input class="gaveta-input" id="gv-responsavel" type="text" value="Maria da Silva" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-membros">Nº de membros</label>
+              <input class="gaveta-input" id="gv-membros" type="number" value="4" min="1" disabled />
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-editar" id="gaveta-btn-editar">✏️ Editar informações</button>
+        <div class="gaveta-acoes-edicao" id="gaveta-acoes-edicao">
+          <button class="gaveta-btn-cancelar" id="gaveta-btn-cancelar">Cancelar</button>
+          <button class="gaveta-btn-salvar" id="gaveta-btn-salvar">💾 Salvar alterações</button>
+        </div>
+        <button type="button" class="gaveta-btn-desativar" data-desativar-conta>Desativar conta</button>
+      </div>
+    </aside>
+
+    
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-caixa">
+        <div class="modal-icone" id="modal-icone">📦</div>
+        <h3 class="modal-titulo" id="modal-titulo">Confirmar ação</h3>
+        <p class="modal-texto" id="modal-texto"></p>
+        <div class="modal-acoes">
+          <button class="btn-modal-cancelar" id="modal-cancelar">Cancelar</button>
+          <button class="btn-modal-confirmar verde" id="modal-confirmar">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

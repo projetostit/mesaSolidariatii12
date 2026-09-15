@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Ponto — Mesa Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-dashboard="PONTO_COLETA" data-autenticacao-ativa="true">
+
+    <header class="cabecalho-perfil">
+      <div class="conteiner-navbar-perfil">
+
+        <a href="index.html" class="logo-perfil-link">
+          <img src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg" alt="Logo Mesa Solidária" class="imagem-logo-perfil" />
+        </a>
+
+        <nav class="menu-perfil">
+          <a href="dashboard_ponto.html" class="item-menu-perfil ativo">🏠 Meu Painel</a>
+          <a href="#" class="item-menu-perfil" id="btn-ir-solicitacoes">📋 Solicitações</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-doacoes">📦 Receber Doação</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-perfil">👤 Meu Perfil</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-ajuda">❓ Ajuda</a>
+        </nav>
+
+        <div class="acoes-perfil">
+          <div class="sino-notificacao" id="sino" title="Notificações">
+            🔔
+            <span class="badge-sino" id="badge-sino">0</span>
+          </div>
+          <div class="painel-notificacoes" id="painel-notificacoes">
+            <div class="cabecalho-notificacoes">Notificações</div>
+            <div class="lista-notificacoes" id="lista-notificacoes">
+              <div class="sem-notificacoes" id="sem-notificacoes">Nenhuma notificação ainda</div>
+            </div>
+          </div>
+          <div class="chip-usuario" style="cursor:pointer;" id="chip-usuario">
+            <div class="avatar-chip" id="avatar-chip">P</div>
+            <span id="nome-chip">Ponto Centro</span>
+          </div>
+          <a href="login.html" class="botao-sair-nav">Sair →</a>
+        </div>
+
+      </div>
+    </header>
+
+    <main class="pagina-dashboard">
+
+      
+      <div class="boas-vindas">
+        <div class="avatar-usuario" id="avatar-inicial">P</div>
+        <div class="texto-boas-vindas">
+          <h1 id="titulo-boas-vindas">Olá, Ponto Centro!</h1>
+          <p>Gerencie seu estoque, solicitações e voluntários</p>
+        </div>
+        <span class="badge-status badge-ponto">Ponto ativo</span>
+      </div>
+
+      
+      <div class="grade-resumo grade-resumo-4">
+        <div class="card-resumo destaque">
+          <div class="label-card">Itens em estoque</div>
+          <div class="valor-card">847</div>
+          <div class="detalhe-card">unidades disponíveis</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Solicitações pendentes</div>
+          <div class="valor-card" id="contador-pendentes">5</div>
+          <div class="detalhe-card">aguardando confirmação</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Beneficiários atendidos</div>
+          <div class="valor-card">23</div>
+          <div class="detalhe-card">em maio/2026</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Doações a receber</div>
+          <div class="valor-card" id="contador-doacoes-card">4</div>
+          <div class="detalhe-card">aguardando recebimento</div>
+        </div>
+      </div>
+
+      
+      <div class="secao-cabecalho" id="secao-solicitacoes">
+        <h2 class="secao-titulo" style="margin:0;">Solicitações pendentes</h2>
+        <span class="badge-contagem" id="badge-pendentes">5 pendentes</span>
+      </div>
+      <div id="lista-solicitacoes-pendentes"></div>
+
+      
+      <h2 class="secao-titulo" style="margin-top:8px;">Estoque atual</h2>
+      <div class="card-historico">
+        <table class="tabela-historico">
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Itens</th>
+              <th>Unidades</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-estoque">
+            <tr>
+              <td>🛒 Cesta básica</td>
+              <td>Arroz, feijão, óleo, macarrão, sal, açúcar</td>
+              <td><strong>45</strong> cestas</td>
+              <td><span class="tag-estoque-ok">Disponível</span></td>
+            </tr>
+            <tr>
+              <td>🧴 Higiene</td>
+              <td>Sabonete, shampoo, pasta de dente, absorvente</td>
+              <td><strong>120</strong> kits</td>
+              <td><span class="tag-estoque-ok">Disponível</span></td>
+            </tr>
+            <tr>
+              <td>👕 Roupas e calçados</td>
+              <td>Roupas adulto/infantil, calçados variados</td>
+              <td><strong>89</strong> peças</td>
+              <td><span class="tag-estoque-ok">Disponível</span></td>
+            </tr>
+            <tr>
+              <td>🧸 Brinquedos</td>
+              <td>Jogos, bonecas, carrinhos</td>
+              <td><strong>34</strong> itens</td>
+              <td><span class="tag-estoque-baixo">Estoque baixo</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+      <h2 class="secao-titulo" style="margin-top:28px;">Histórico de distribuições</h2>
+      <div class="card-historico">
+        <table class="tabela-historico">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Beneficiário</th>
+              <th>Itens entregues</th>
+              <th>Modalidade</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>14/05/2026</td>
+              <td>João Pereira</td>
+              <td>Cesta básica + Higiene</td>
+              <td>Retirada</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>12/05/2026</td>
+              <td>Ana Lima</td>
+              <td>Cesta básica</td>
+              <td>Entrega</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>10/05/2026</td>
+              <td>Carlos Santos</td>
+              <td>Roupas e calçados</td>
+              <td>Retirada</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>08/05/2026</td>
+              <td>Maria Oliveira</td>
+              <td>Cesta básica + Brinquedos</td>
+              <td>Entrega</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>05/05/2026</td>
+              <td>Fernanda Costa</td>
+              <td>Higiene + Roupas</td>
+              <td>Retirada</td>
+              <td><span class="tag-entregue">Entregue</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+    
+    <div class="gaveta-overlay" id="gaveta-overlay"></div>
+
+    <aside class="gaveta-perfil" id="gaveta-perfil">
+      <div class="gaveta-cabecalho">
+        <h2 class="gaveta-titulo">Perfil do Ponto</h2>
+        <button class="gaveta-fechar" id="gaveta-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-avatar-bloco">
+          <div class="gaveta-avatar" id="gaveta-avatar">P</div>
+          <div>
+            <div class="gaveta-nome-exibido" id="gaveta-nome-exibido">Ponto Centro</div>
+            <span class="badge-status badge-ponto" style="margin-left:0;">Ponto ativo</span>
+          </div>
+        </div>
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Informações do ponto</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-nome">Nome do ponto</label>
+              <input class="gaveta-input" id="gv-nome" type="text" value="Ponto Centro" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-responsavel">Responsável</label>
+              <input class="gaveta-input" id="gv-responsavel" type="text" value="Roberto Almeida" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-email">E-mail</label>
+              <input class="gaveta-input" id="gv-email" type="email" value="ponto@ponto.com" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-telefone">Telefone</label>
+              <input class="gaveta-input" id="gv-telefone" type="tel" value="(11) 3456-7890" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Endereço e funcionamento</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo" style="grid-column: span 2;">
+              <label class="gaveta-label" for="gv-rua">Endereço</label>
+              <input class="gaveta-input" id="gv-rua" type="text" value="Rua das Flores, 100" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-bairro">Bairro</label>
+              <input class="gaveta-input" id="gv-bairro" type="text" value="Centro" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-cidade">Cidade</label>
+              <input class="gaveta-input" id="gv-cidade" type="text" value="São Paulo" disabled />
+            </div>
+            <div class="gaveta-campo" style="grid-column: span 2;">
+              <label class="gaveta-label" for="gv-horario">Horário de funcionamento</label>
+              <input class="gaveta-input" id="gv-horario" type="text" value="Segunda a sábado — 09h às 17h" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-editar" id="gaveta-btn-editar">✏️ Editar informações</button>
+        <div class="gaveta-acoes-edicao" id="gaveta-acoes-edicao">
+          <button class="gaveta-btn-cancelar" id="gaveta-btn-cancelar">Cancelar</button>
+          <button class="gaveta-btn-salvar" id="gaveta-btn-salvar">💾 Salvar alterações</button>
+        </div>
+        <button type="button" class="gaveta-btn-desativar" data-desativar-conta>Desativar conta</button>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-doacoes">
+      <div class="gaveta-cabecalho">
+        <h2 class="gaveta-titulo">Receber Doações</h2>
+        <button class="gaveta-fechar" id="gaveta-doacoes-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-secao">
+          <div class="gaveta-busca">
+            <input type="search" id="busca-doador" placeholder="🔍 Buscar doador pelo nome..." autocomplete="off" />
+          </div>
+          <div class="gaveta-secao-titulo" id="titulo-doacoes-gaveta">Doações aguardando recebimento (0)</div>
+          <div id="lista-doacoes-dinamica"></div>
+        </div>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-ajuda">
+      <div class="gaveta-cabecalho">
+        <div>
+          <h2 class="gaveta-titulo">Central de Ajuda</h2>
+          <p class="gaveta-subtitulo">Fale com nosso SAC</p>
+        </div>
+        <button class="gaveta-fechar" id="gaveta-ajuda-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Enviar mensagem</div>
+          <div class="form-grupo">
+            <label class="form-label" for="sac-assunto">Assunto <span class="form-obrigatorio">*</span></label>
+            <select class="form-select" id="sac-assunto">
+              <option value="">Selecione um assunto...</option>
+              <option value="duvida">Dúvida geral</option>
+              <option value="estoque">Problema com estoque</option>
+              <option value="voluntarios">Gestão de voluntários</option>
+              <option value="sistema">Problema no sistema</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-grupo" style="margin-top:14px;">
+            <label class="form-label" for="sac-mensagem">Mensagem <span class="form-obrigatorio">*</span></label>
+            <textarea class="form-textarea" id="sac-mensagem" rows="5" placeholder="Descreva sua dúvida ou problema com o máximo de detalhes possível..."></textarea>
+          </div>
+          <p class="form-aviso" style="margin-top:14px;">🕒 Tempo médio de resposta: <strong>1 a 2 dias úteis</strong>. Você será notificado por e-mail.</p>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-cancelar" id="gaveta-ajuda-cancelar">Cancelar</button>
+        <button class="gaveta-btn-salvar" id="gaveta-ajuda-enviar">📨 Enviar mensagem</button>
+      </div>
+    </aside>
+
+    
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-caixa">
+        <div class="modal-icone" id="modal-icone">📦</div>
+        <h3 class="modal-titulo" id="modal-titulo">Confirmar ação</h3>
+        <p class="modal-texto" id="modal-texto"></p>
+        <div class="modal-acoes">
+          <button class="btn-modal-cancelar" id="modal-cancelar">Cancelar</button>
+          <button class="btn-modal-confirmar verde" id="modal-confirmar">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    <script src="js/script.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,8 @@
+DB_USER=root
+DB_HOST=localhost
+DB_PASSWORD=
+DB_NAME=mesa_solidaria
+
+JWT_SECRET=DhpoeASF1lkCGRdGm96eM9HyZz1Qq5Lr4Eezca7tm3+o7b1tWRfYTju/jCi3Bbqo
+
+SESSION_SECRET=XPHdv2yuE5aG0hb3eBf2OYAPIvPkF2uF5e9FDu8tCn3RgWmUSsCdfQhWRkn7o33f

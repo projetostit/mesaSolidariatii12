@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Doador — Mesa Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-dashboard="DOADOR" data-autenticacao-ativa="true">
+
+    <header class="cabecalho-perfil">
+      <div class="conteiner-navbar-perfil">
+
+        <a href="index.html" class="logo-perfil-link">
+          <img src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg" alt="Logo Mesa Solidária" class="imagem-logo-perfil" />
+        </a>
+
+        <nav class="menu-perfil">
+          <a href="dashboard_doador.html" class="item-menu-perfil ativo">🏠 Meu Painel</a>
+          <a href="#" class="item-menu-perfil" id="btn-ir-doacoes">📦 Minhas Doações</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-perfil">👤 Meu Perfil</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-ajuda">❓ Ajuda</a>
+        </nav>
+
+        <div class="acoes-perfil">
+          <div class="sino-notificacao" id="sino" title="Notificações">
+            🔔
+            <span class="badge-sino" id="badge-sino">0</span>
+          </div>
+          <div class="painel-notificacoes" id="painel-notificacoes">
+            <div class="cabecalho-notificacoes">Notificações</div>
+            <div class="lista-notificacoes" id="lista-notificacoes">
+              <div class="sem-notificacoes" id="sem-notificacoes">Nenhuma notificação ainda</div>
+            </div>
+          </div>
+          <div class="chip-usuario" style="cursor:pointer;" id="chip-usuario">
+            <div class="avatar-chip" id="avatar-chip">C</div>
+            <span id="nome-chip">Carlos Souza</span>
+          </div>
+          <a href="login.html" class="botao-sair-nav">Sair →</a>
+        </div>
+
+      </div>
+    </header>
+
+    <main class="pagina-dashboard">
+
+      
+      <div class="boas-vindas">
+        <div class="avatar-usuario" id="avatar-inicial">C</div>
+        <div class="texto-boas-vindas">
+          <h1 id="titulo-boas-vindas">Olá, Carlos Souza!</h1>
+          <p>Obrigado por fazer parte da Mesa Solidária ❤️</p>
+        </div>
+        <span class="badge-status badge-doador">Doador ativo</span>
+      </div>
+
+      
+      <div class="grade-resumo grade-resumo-4">
+        <div class="card-resumo destaque">
+          <div class="label-card">Total de doações</div>
+          <div class="valor-card">12</div>
+          <div class="detalhe-card">desde que se cadastrou</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Famílias impactadas</div>
+          <div class="valor-card">38</div>
+          <div class="detalhe-card">beneficiários atendidos</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Itens doados</div>
+          <div class="valor-card">247</div>
+          <div class="detalhe-card">unidades no total</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Pendentes</div>
+          <div class="valor-card" id="contador-pendentes-doador">2</div>
+          <div class="detalhe-card">aguardando recebimento</div>
+        </div>
+      </div>
+
+      
+      <div class="banner-impacto-doador">
+        🌟 Você já ajudou <strong>38 famílias</strong> e doou <strong>247 itens</strong> para comunidades em situação de vulnerabilidade. Continue assim!
+      </div>
+
+      
+      <div class="secao-cabecalho" id="secao-nova-doacao" style="margin-top:8px;">
+        <h2 class="secao-titulo" style="margin:0;">📦 Registrar nova doação</h2>
+      </div>
+
+      <div class="card-nova-doacao">
+        <div class="form-grupo">
+          <label class="form-label" for="select-ponto">Ponto de coleta destino <span class="form-obrigatorio">*</span></label>
+          <select class="form-select" id="select-ponto">
+            <option value="">Escolha um ponto de coleta...</option>
+          </select>
+          <div class="form-ponto-info" id="ponto-info"></div>
+        </div>
+
+        <div class="form-grupo" style="margin-top:18px;">
+          <label class="form-label">O que você vai doar? <span class="form-obrigatorio">*</span></label>
+          <div class="lista-itens-doacao" id="lista-itens-form"></div>
+        </div>
+
+        <div class="form-grupo" style="margin-top:16px;">
+          <label class="form-label" for="obs-doacao">Observação <span class="form-opcional">(opcional)</span></label>
+          <textarea class="form-textarea" id="obs-doacao" rows="2" placeholder="Ex.: roupas tamanho P, brinquedos seminovos..."></textarea>
+        </div>
+
+        <p class="form-erro" id="erro-nova-doacao"></p>
+
+        <div style="margin-top:20px;display:flex;justify-content:flex-end;">
+          <button class="btn-registrar-doacao" id="btn-registrar-doacao">📦 Registrar Doação</button>
+        </div>
+      </div>
+
+      
+      <div class="secao-cabecalho" id="secao-minhas-doacoes" style="margin-top:32px;">
+        <h2 class="secao-titulo" style="margin:0;">Minhas doações</h2>
+        <span class="badge-contagem" id="badge-total-doacoes">5 doações</span>
+      </div>
+      <div class="filtros-doacoes" id="filtros-doacoes"></div>
+      <div id="lista-minhas-doacoes"></div>
+
+    </main>
+
+    
+    <div class="gaveta-overlay" id="gaveta-overlay"></div>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-perfil">
+      <div class="gaveta-cabecalho">
+        <h2 class="gaveta-titulo">Meu Perfil</h2>
+        <button class="gaveta-fechar" id="gaveta-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-avatar-bloco">
+          <div class="gaveta-avatar" id="gaveta-avatar">C</div>
+          <div>
+            <div class="gaveta-nome-exibido" id="gaveta-nome-exibido">Carlos Souza</div>
+            <span class="badge-status badge-doador" style="margin-left:0;">Doador ativo</span>
+          </div>
+        </div>
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Informações pessoais</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-nome">Nome completo</label>
+              <input class="gaveta-input" id="gv-nome" type="text" value="Carlos Souza" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-email">E-mail</label>
+              <input class="gaveta-input" id="gv-email" type="email" value="doador@doador.com" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-telefone">Telefone</label>
+              <input class="gaveta-input" id="gv-telefone" type="tel" value="(11) 99876-5432" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-cpf">CPF</label>
+              <input class="gaveta-input" id="gv-cpf" type="text" value="123.456.789-00" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Preferências de doação</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo" style="grid-column: span 2;">
+              <label class="gaveta-label" for="gv-ponto-preferido">Ponto de coleta preferido</label>
+              <input class="gaveta-input" id="gv-ponto-preferido" type="text" value="Ponto Centro" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-editar" id="gaveta-btn-editar">✏️ Editar informações</button>
+        <div class="gaveta-acoes-edicao" id="gaveta-acoes-edicao">
+          <button class="gaveta-btn-cancelar" id="gaveta-btn-cancelar">Cancelar</button>
+          <button class="gaveta-btn-salvar" id="gaveta-btn-salvar">💾 Salvar alterações</button>
+        </div>
+        <button type="button" class="gaveta-btn-desativar" data-desativar-conta>Desativar conta</button>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-ajuda">
+      <div class="gaveta-cabecalho">
+        <div>
+          <h2 class="gaveta-titulo">Central de Ajuda</h2>
+          <p class="gaveta-subtitulo">Fale com nosso SAC</p>
+        </div>
+        <button class="gaveta-fechar" id="gaveta-ajuda-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Enviar mensagem</div>
+          <div class="form-grupo">
+            <label class="form-label" for="sac-assunto">Assunto <span class="form-obrigatorio">*</span></label>
+            <select class="form-select" id="sac-assunto">
+              <option value="">Selecione um assunto...</option>
+              <option value="doacao">Dúvida sobre doação</option>
+              <option value="ponto">Informações sobre ponto de coleta</option>
+              <option value="cancelamento">Cancelar ou alterar doação</option>
+              <option value="sistema">Problema no sistema</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-grupo" style="margin-top:14px;">
+            <label class="form-label" for="sac-mensagem">Mensagem <span class="form-obrigatorio">*</span></label>
+            <textarea class="form-textarea" id="sac-mensagem" rows="5" placeholder="Descreva sua dúvida ou problema..."></textarea>
+          </div>
+          <p class="form-aviso" style="margin-top:14px;">🕒 Tempo médio de resposta: <strong>1 a 2 dias úteis</strong>.</p>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-cancelar" id="gaveta-ajuda-cancelar">Cancelar</button>
+        <button class="gaveta-btn-salvar" id="gaveta-ajuda-enviar">📨 Enviar mensagem</button>
+      </div>
+    </aside>
+
+    
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-caixa">
+        <div class="modal-icone" id="modal-icone">📦</div>
+        <h3 class="modal-titulo" id="modal-titulo">Confirmar ação</h3>
+        <p class="modal-texto" id="modal-texto"></p>
+        <div class="modal-acoes">
+          <button class="btn-modal-cancelar" id="modal-cancelar">Cancelar</button>
+          <button class="btn-modal-confirmar verde" id="modal-confirmar">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    <script src="js/script.js"></script>
+    
+  </body>
+</html>

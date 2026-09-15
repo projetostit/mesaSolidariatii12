@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Voluntário — Mesa Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-dashboard="VOLUNTARIO" data-autenticacao-ativa="true">
+
+    <header class="cabecalho-perfil">
+      <div class="conteiner-navbar-perfil">
+
+        <a href="index.html" class="logo-perfil-link">
+          <img src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg" alt="Logo Mesa Solidária" class="imagem-logo-perfil" />
+        </a>
+
+        <nav class="menu-perfil">
+          <a href="dashboard_voluntario.html" class="item-menu-perfil ativo">🏠 Meu Painel</a>
+          <a href="#" class="item-menu-perfil" id="btn-ir-entregas">🚚 Minhas Entregas</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-cupons">🎁 Cupons</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-certificado">📜 Certificado</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-perfil">👤 Meu Perfil</a>
+          <a href="#" class="item-menu-perfil" id="btn-abrir-ajuda">❓ Ajuda</a>
+        </nav>
+
+        <div class="acoes-perfil">
+          <div class="sino-notificacao" id="sino" title="Notificações">
+            🔔
+            <span class="badge-sino" id="badge-sino">0</span>
+          </div>
+          <div class="painel-notificacoes" id="painel-notificacoes">
+            <div class="cabecalho-notificacoes">Notificações</div>
+            <div class="lista-notificacoes" id="lista-notificacoes">
+              <div class="sem-notificacoes" id="sem-notificacoes">Nenhuma notificação ainda</div>
+            </div>
+          </div>
+          <div class="chip-usuario" style="cursor:pointer;" id="chip-usuario">
+            <div class="avatar-chip" id="avatar-chip">R</div>
+            <span id="nome-chip">Ricardo Lima</span>
+          </div>
+          <a href="login.html" class="botao-sair-nav">Sair →</a>
+        </div>
+
+      </div>
+    </header>
+
+    <main class="pagina-dashboard">
+
+      
+      <div class="boas-vindas">
+        <div class="avatar-usuario" id="avatar-inicial">R</div>
+        <div class="texto-boas-vindas">
+          <h1 id="titulo-boas-vindas">Olá, Ricardo Lima!</h1>
+          <p>Sua dedicação faz a diferença na vida de muitas famílias 🤝</p>
+        </div>
+        <div class="boas-vindas-badges">
+          <span class="badge-status badge-voluntario">Voluntário ativo</span>
+          <span class="chip-pontos" id="chip-pontos-display" title="Ver cupons disponíveis">🪙 <strong id="saldo-pontos-display">47</strong> pts</span>
+        </div>
+      </div>
+
+      
+      <div class="grade-resumo grade-resumo-4">
+        <div class="card-resumo destaque">
+          <div class="label-card">Entregas concluídas</div>
+          <div class="valor-card">10</div>
+          <div class="detalhe-card">desde que se cadastrou</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Famílias atendidas</div>
+          <div class="valor-card">24</div>
+          <div class="detalhe-card">beneficiários entregues</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Em rota</div>
+          <div class="valor-card" id="contador-em-rota">1</div>
+          <div class="detalhe-card">entrega em andamento</div>
+        </div>
+        <div class="card-resumo">
+          <div class="label-card">Pendentes</div>
+          <div class="valor-card" id="contador-pendentes-vol">2</div>
+          <div class="detalhe-card">aguardando retirada</div>
+        </div>
+      </div>
+
+      
+      <div class="banner-motivacao-voluntario">
+        🚗 Você já realizou <strong>10 entregas</strong> e ajudou <strong>24 famílias</strong> a receberem doações com dignidade. Muito obrigado!
+      </div>
+
+      
+      <div class="secao-cabecalho" id="secao-minhas-entregas" style="margin-top:8px;">
+        <h2 class="secao-titulo" style="margin:0;">🚚 Minhas Entregas</h2>
+        <span class="badge-contagem" id="badge-total-entregas">5 entregas</span>
+      </div>
+      <div class="filtros-doacoes" id="filtros-entregas"></div>
+      <div id="lista-minhas-entregas"></div>
+
+      
+      <div class="secao-cabecalho" style="margin-top:36px;">
+        <h2 class="secao-titulo" style="margin:0;">📌 Entregas disponíveis</h2>
+        <span class="badge-contagem" id="badge-disp">0 disponíveis</span>
+      </div>
+      <p class="secao-desc-disp">Solicitações abertas aguardando um voluntário. Aceite uma entrega e ajude uma família!</p>
+      <div id="lista-entregas-disponiveis"></div>
+
+    </main>
+
+    
+    <div class="gaveta-overlay" id="gaveta-overlay"></div>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-perfil">
+      <div class="gaveta-cabecalho">
+        <h2 class="gaveta-titulo">Meu Perfil</h2>
+        <button class="gaveta-fechar" id="gaveta-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-avatar-bloco">
+          <div class="gaveta-avatar" id="gaveta-avatar">R</div>
+          <div>
+            <div class="gaveta-nome-exibido" id="gaveta-nome-exibido">Ricardo Lima</div>
+            <span class="badge-status badge-voluntario" style="margin-left:0;">Voluntário ativo</span>
+          </div>
+        </div>
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Informações pessoais</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-nome">Nome completo</label>
+              <input class="gaveta-input" id="gv-nome" type="text" value="Ricardo Lima" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-email">E-mail</label>
+              <input class="gaveta-input" id="gv-email" type="email" value="voluntario@voluntario.com" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-telefone">Telefone</label>
+              <input class="gaveta-input" id="gv-telefone" type="tel" value="(11) 98765-4321" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-cpf">CPF</label>
+              <input class="gaveta-input" id="gv-cpf" type="text" value="987.654.321-00" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Informações de voluntariado</div>
+          <div class="gaveta-grade">
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-disponibilidade">Disponibilidade</label>
+              <input class="gaveta-input" id="gv-disponibilidade" type="text" value="Seg a Sex, manhãs" disabled />
+            </div>
+            <div class="gaveta-campo">
+              <label class="gaveta-label" for="gv-veiculo">Veículo</label>
+              <input class="gaveta-input" id="gv-veiculo" type="text" value="Carro" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-editar" id="gaveta-btn-editar">✏️ Editar informações</button>
+        <div class="gaveta-acoes-edicao" id="gaveta-acoes-edicao">
+          <button class="gaveta-btn-cancelar" id="gaveta-btn-cancelar">Cancelar</button>
+          <button class="gaveta-btn-salvar" id="gaveta-btn-salvar">💾 Salvar alterações</button>
+        </div>
+        <button type="button" class="gaveta-btn-desativar" data-desativar-conta>Desativar conta</button>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-ajuda">
+      <div class="gaveta-cabecalho">
+        <div>
+          <h2 class="gaveta-titulo">Central de Ajuda</h2>
+          <p class="gaveta-subtitulo">Fale com nosso SAC</p>
+        </div>
+        <button class="gaveta-fechar" id="gaveta-ajuda-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="gaveta-secao">
+          <div class="gaveta-secao-titulo">Enviar mensagem</div>
+          <div class="form-grupo">
+            <label class="form-label" for="sac-assunto">Assunto <span class="form-obrigatorio">*</span></label>
+            <select class="form-select" id="sac-assunto">
+              <option value="">Selecione um assunto...</option>
+              <option value="entrega">Dúvida sobre entrega</option>
+              <option value="rota">Informações de rota</option>
+              <option value="beneficiario">Problema com beneficiário</option>
+              <option value="ponto">Problema no ponto de coleta</option>
+              <option value="sistema">Problema no sistema</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-grupo" style="margin-top:14px;">
+            <label class="form-label" for="sac-mensagem">Mensagem <span class="form-obrigatorio">*</span></label>
+            <textarea class="form-textarea" id="sac-mensagem" rows="5" placeholder="Descreva sua dúvida ou problema..."></textarea>
+          </div>
+          <p class="form-aviso" style="margin-top:14px;">🕒 Tempo médio de resposta: <strong>1 a 2 dias úteis</strong>.</p>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-cancelar" id="gaveta-ajuda-cancelar">Cancelar</button>
+        <button class="gaveta-btn-salvar" id="gaveta-ajuda-enviar">📨 Enviar mensagem</button>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-cupons">
+      <div class="gaveta-cabecalho">
+        <div>
+          <h2 class="gaveta-titulo">🎁 Meus Cupons</h2>
+          <p class="gaveta-subtitulo">Troque seus pontos por recompensas</p>
+        </div>
+        <button class="gaveta-fechar" id="gaveta-cupons-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="saldo-cupons-header">
+        <div class="saldo-cupons-esq">
+          <span class="saldo-cupons-label">Seu saldo</span>
+          <span class="saldo-cupons-valor"><span id="saldo-cupons-valor">47</span> 🪙 pontos</span>
+        </div>
+        <span class="saldo-cupons-regra">A cada 0,5 km percorrido = 1 ponto</span>
+      </div>
+      <div class="gaveta-corpo" style="padding-top:0;">
+        <div id="lista-cupons"></div>
+      </div>
+    </aside>
+
+    
+    <aside class="gaveta-perfil" id="gaveta-certificado">
+      <div class="gaveta-cabecalho">
+        <div>
+          <h2 class="gaveta-titulo">📜 Certificado</h2>
+          <p class="gaveta-subtitulo">Horas complementares de voluntariado</p>
+        </div>
+        <button class="gaveta-fechar" id="gaveta-cert-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="gaveta-corpo">
+        <div class="cert-preview">
+          <div class="cert-cabecalho">
+            <span class="cert-logo">Mesa Solidária</span>
+            <span class="cert-titulo-doc">Certificado de Voluntariado</span>
+          </div>
+          <p class="cert-texto">Certificamos que <strong id="cert-nome">Ricardo Lima</strong> realizou atividades de voluntariado na plataforma Mesa Solidária, contribuindo com entregas de doações para famílias em situação de vulnerabilidade social.</p>
+          <div class="cert-stats">
+            <div class="cert-stat">
+              <span class="cert-stat-valor" id="cert-entregas">12</span>
+              <span class="cert-stat-label">Entregas</span>
+            </div>
+            <div class="cert-stat">
+              <span class="cert-stat-valor" id="cert-horas">18,0h</span>
+              <span class="cert-stat-label">Horas</span>
+            </div>
+            <div class="cert-stat">
+              <span class="cert-stat-valor">24</span>
+              <span class="cert-stat-label">Famílias</span>
+            </div>
+          </div>
+          <div class="cert-periodo">Janeiro de 2026 — Maio de 2026</div>
+          <div class="cert-assinatura">Mesa Solidária — Plataforma de Doações Solidárias</div>
+        </div>
+        <div class="gaveta-secao" style="margin-top:16px;">
+          <div class="gaveta-secao-titulo">Emitir certificado</div>
+          <div class="form-grupo">
+            <label class="form-label" for="cert-nome-input">Nome a constar no certificado</label>
+            <input class="gaveta-input" id="cert-nome-input" type="text" value="Ricardo Lima" />
+          </div>
+          <p class="form-aviso" style="margin-top:10px;">📋 O certificado será enviado para <strong>voluntario@voluntario.com</strong>.</p>
+        </div>
+      </div>
+      <div class="gaveta-rodape">
+        <button class="gaveta-btn-cancelar" id="gaveta-cert-cancelar">Fechar</button>
+        <button class="gaveta-btn-salvar" id="gaveta-cert-emitir">📄 Emitir Certificado</button>
+      </div>
+    </aside>
+
+    
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-caixa">
+        <div class="modal-icone" id="modal-icone">🚚</div>
+        <h3 class="modal-titulo" id="modal-titulo">Confirmar ação</h3>
+        <p class="modal-texto" id="modal-texto"></p>
+        <div class="modal-acoes">
+          <button class="btn-modal-cancelar" id="modal-cancelar">Cancelar</button>
+          <button class="btn-modal-confirmar verde" id="modal-confirmar">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    <script src="js/script.js"></script>
+   
+  </body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Mesa Solidária</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+    
+  </head>
+  <body class="corpo-login">
+    <header class="cabecalho">
+      <div class="conteiner-navbar">
+        <div class="area-logo">
+          <a href="index.html">
+            <img
+              src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg"
+              alt="Logo Mesa Solidária"
+              class="imagem-logo"
+            />
+          </a>
+        </div>
+
+        <nav class="menu">
+<a href="index.html" class="item-menu">Início</a>
+          <a href="sobre.html" class="item-menu">Sobre</a>
+          <a href="comoFunciona.html" class="item-menu">Como funciona</a>
+
+          <a href="familia.html" class="item-menu">Famílias</a>
+          <a href="doador.html" class="item-menu">Doador</a>
+          <a href="voluntario.html" class="item-menu">Voluntário</a>
+          <a href="empresaParceira.html" class="item-menu"
+            >Empresas parceiras</a
+          >
+
+          <a href="impacto.html" class="item-menu">Impacto</a>
+          <a href="faq.html" class="item-menu">FAQ</a>
+          <a href="contato.html" class="item-menu">Contato</a>
+        </nav>
+
+       <div class="area-botao">
+      <a class="botao-entrar" href="login.html">Entrar</a>
+
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+    <div class="pagina-login">
+
+      
+      <aside class="painel-esquerdo">
+        <div class="conteudo-esquerdo">
+          <a href="index.html">
+            <img
+              src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg"
+              alt="Logo Mesa Solidária"
+              class="logo-login"
+            />
+          </a>
+          <div class="divisor-login"></div>
+          <h1 class="slogan-login">
+            Conectando quem pode ajudar a quem precisa
+          </h1>
+          <p class="descricao-login">
+            Juntos construímos uma rede solidária que transforma doações em esperança para famílias.
+          </p>
+        </div>
+      </aside>
+
+      
+      <main class="painel-direito">
+        <div class="caixa-login">
+          <h2 class="titulo-form">Bem-vindo de volta</h2>
+          <p class="subtitulo-form">Entre com seu e-mail, CPF ou CNPJ e senha.</p>
+
+          <form
+            class="formulario-login"
+            action="#"
+            data-api-login="https://mesa-solidaria-api-production.up.railway.app/auth/login"
+            data-api-reativar="/api/auth/reativar"
+            novalidate
+          >
+
+            <p id="erro-login" class="mensagem-erro" role="status" aria-live="polite" aria-atomic="true" style="display: none;"></p>
+
+            <div class="campo-login">
+              <label class="rotulo-campo" for="entrada-identificador">E-mail, CPF ou CNPJ</label>
+              <input
+                type="text"
+                id="entrada-identificador"
+                name="identificador"
+                class="entrada-formulario"
+                placeholder="Digite seu e-mail, CPF ou CNPJ"
+                autocomplete="username"
+                required
+              />
+            </div>
+
+            <div class="campo-login">
+              <label class="rotulo-campo" for="entrada-senha">Senha</label>
+              <input
+                type="password"
+                id="entrada-senha"
+                name="senha"
+                class="entrada-formulario"
+                placeholder="Digite sua senha"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+
+            <button type="submit" class="botao-submit">Entrar</button>
+
+            <div class="links-login">
+              <a href="#" class="link-form">Esqueceu a senha?</a>
+              <a href="cadastro.html" class="link-form">Criar conta</a>
+            </div>
+          </form>
+
+          
+          <div class="criar-conta-cta">
+            <p>Novo por aqui? Escolha seu perfil para criar uma conta.</p>
+            <div class="grade-perfis" aria-label="Perfis para cadastro">
+              <a class="cartao-perfil" href="cadastro.html" data-perfil-cadastro="BENEFICIARIO">
+                <img src="img/logos/logo_beneficiario.png" alt="" class="icone-perfil" />
+                <span data-nome-perfil>BENEFICIÁRIO</span>
+              </a>
+              <a class="cartao-perfil" href="cadastro.html" data-perfil-cadastro="VOLUNTARIO">
+                <img src="img/logos/logo_voluntario.png" alt="" class="icone-perfil" />
+                <span data-nome-perfil>VOLUNTÁRIO</span>
+              </a>
+              <a class="cartao-perfil" href="cadastro.html" data-perfil-cadastro="DOADOR">
+                <img src="img/logos/logo_doador.png" alt="" class="icone-perfil" />
+                <span data-nome-perfil>DOADOR</span>
+              </a>
+              <a class="cartao-perfil" href="cadastro.html" data-perfil-cadastro="PONTO_COLETA">
+                <img src="img/logos/logo_ponto_de_coleta.png" alt="" class="icone-perfil" />
+                <span data-nome-perfil>PONTO DE COLETA</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-reativacao" id="modal-reativacao" hidden>
+      <div class="modal-reativacao-conteudo" role="dialog" aria-modal="true" aria-labelledby="titulo-reativacao">
+        <h2 id="titulo-reativacao">Sua conta está inativa</h2>
+        <p>
+          Olá, <strong id="nome-usuario-inativo"></strong>. Deseja reativar sua conta e voltar ao seu painel?
+        </p>
+        <p id="mensagem-reativacao" class="mensagem-reativacao" role="status" aria-live="polite"></p>
+        <div class="acoes-reativacao">
+          <button type="button" class="botao-secundario-reativacao" id="cancelar-reativacao">Cancelar</button>
+          <button type="button" class="botao-confirmar-reativacao" id="confirmar-reativacao">Reativar conta</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
