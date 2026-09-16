@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escolher perfil — Mesa Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+  </head>
+  <body>
+    <div class="pagina-login">
+      <aside class="painel-esquerdo">
+        <div class="conteudo-esquerdo">
+          <a href="index.html"><img src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg" alt="Logo Mesa Solidária" class="logo-login" /></a>
+          <div class="divisor-login"></div>
+          <h1 class="slogan-login">Uma conta, diferentes formas de ajudar</h1>
+          <p class="descricao-login">Escolha a área que deseja acessar agora. Você poderá alternar de perfil quando precisar.</p>
+        </div>
+      </aside>
+      <main class="painel-direito">
+        <div class="caixa-login">
+          <h2 class="titulo-form">Escolha seu perfil</h2>
+          <p class="subtitulo-form">Carregando seus perfis disponíveis...</p>
+          <p id="mensagem-selecao-perfil" class="mensagem-selecao-perfil" role="status" aria-live="polite"></p>
+          <div id="lista-perfis-disponiveis" class="grade-perfis lista-perfis-disponiveis" data-api-perfil-ativo="/api/auth/perfil-ativo"></div>
+          <div class="links-login"><a href="login.html" class="link-form">Voltar ao login</a></div>
+        </div>
+      </main>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>

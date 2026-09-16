@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contato - Mesa Solidária</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+</head>
+<body class="pagina-contato">
+  <div class="pagina-contato-wrapper">
+   <header class="cabecalho">
+      <div class="conteiner-navbar">
+        <div class="area-logo">
+          <a href="index.html">
+            <img
+              src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg"
+              alt="Logo Mesa Solidária"
+              class="imagem-logo"
+            />
+          </a>
+        </div>
+
+        <nav class="menu">
+<a href="index.html" class="item-menu">Início</a>          <a href="sobre.html" class="item-menu">Sobre</a>
+          <a href="comoFunciona.html" class="item-menu">Como funciona</a>
+
+          <a href="familia.html" class="item-menu">Famílias</a>
+          <a href="doador.html" class="item-menu">Doador</a>
+          <a href="voluntario.html" class="item-menu">Voluntário</a>
+          <a href="empresaParceira.html" class="item-menu"
+            >Empresas parceiras</a
+          >
+
+          <a href="impacto.html" class="item-menu">Impacto</a>
+          <a href="faq.html" class="item-menu">FAQ</a>
+          <a href="contato.html" class="item-menu">Contato</a>
+        </nav>
+
+       <div class="area-botao">
+      <a class="botao-entrar" href="login.html">Entrar</a>
+
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+    <main class="conteudo-contato">
+      
+      <section class="secao-cabecalho-contato">
+        <p class="etiqueta-pagina">Fale com o Mesa Solidária</p>
+        <h1 class="titulo-contato">
+          Conecte-se com nossa equipe 
+        </h1>
+        <p class="descricao-contato">
+          Se você é <strong>beneficiário</strong>, <strong>doador</strong>, 
+          <strong>voluntário</strong> ou <strong>ponto de coleta</strong>, 
+          este é o espaço para tirar dúvidas, enviar sugestões ou propor parcerias.
+        </p>
+      </section>
+
+      <section class="secao-layout-contato">
+        <div class="coluna-esquerda-contato">
+          <div class="bloco-perfis-contato" aria-label="Selecione seu perfil">
+            <div class="lista-perfis-contato">
+              <button type="button" class="botao-perfil botao-perfil-ativo" data-perfil="Beneficiário">
+                Beneficiário
+              </button>
+              <button type="button" class="botao-perfil" data-perfil="Doador">
+                Doador
+              </button>
+              <button type="button" class="botao-perfil" data-perfil="Voluntário">
+                Voluntário
+              </button>
+              <button type="button" class="botao-perfil" data-perfil="Ponto de coleta">
+                Ponto de coleta
+              </button>
+            </div>
+
+            <p class="texto-perfil-selecionado">
+              Você está falando como: <span id="texto-perfil-selecionado">Beneficiário</span>
+            </p>
+          </div>
+
+          <form id="form-contato" class="formulario-contato" novalidate>
+            <input type="hidden" id="perfil-contato" name="perfil" value="Beneficiário" />
+
+            <div class="grupo-campo">
+              <label for="nome-contato" class="rotulo-campo">Nome completo *</label>
+              <input
+                type="text"
+                id="nome-contato"
+                name="nome"
+                class="campo-contato"
+                placeholder="Digite seu nome completo"
+                required
+              />
+            </div>
+
+            <div class="grupo-campo campos-lado-a-lado">
+              <div class="campo-metade">
+                <label for="email-contato" class="rotulo-campo">E-mail *</label>
+                <input
+                  type="email"
+                  id="email-contato"
+                  name="email"
+                  class="campo-contato"
+                  placeholder="seuemail@exemplo.com"
+                  required
+                />
+              </div>
+
+              <div class="campo-metade">
+                <label for="telefone-contato" class="rotulo-campo">Telefone / WhatsApp</label>
+                <input
+                  type="tel"
+                  id="telefone-contato"
+                  name="telefone"
+                  class="campo-contato"
+                  placeholder="(DDD) 90000-0000"
+                />
+              </div>
+            </div>
+
+            <div class="grupo-campo">
+              <label for="assunto-contato" class="rotulo-campo">Assunto *</label>
+              <select
+                id="assunto-contato"
+                name="assunto"
+                class="campo-contato"
+                required
+              >
+                <option value="">Selecione uma opção</option>
+                <option value="Cadastro de beneficiário">Dúvidas sobre cadastro de beneficiário</option>
+                <option value="Quero doar alimentos">Quero doar alimentos</option>
+                <option value="Quero ser voluntário">Quero ser voluntário</option>
+                <option value="Quero ser ponto de coleta">Quero ser ponto de coleta</option>
+                <option value="Outros assuntos">Outros assuntos</option>
+              </select>
+            </div>
+
+            <div class="grupo-campo">
+              <label for="mensagem-contato" class="rotulo-campo">Mensagem *</label>
+              <textarea
+                id="mensagem-contato"
+                name="mensagem"
+                class="campo-contato campo-textarea"
+                rows="5"
+                placeholder="Conte como podemos ajudar. Se possível, informe cidade, bairro e se você é beneficiário, doador, voluntário ou ponto de coleta."
+                required
+              ></textarea>
+            </div>
+
+            <div class="grupo-campo grupo-checkbox">
+              <label class="rotulo-checkbox">
+                <input type="checkbox" id="aceite-contato" name="aceite" />
+                <span>
+                  Autorizo o contato do Mesa Solidária para responder minha solicitação
+                  e entendo que meus dados serão tratados conforme a LGPD.
+                </span>
+              </label>
+            </div>
+
+            <p class="mensagem-erro-formulario" id="mensagem-erro-formulario"></p>
+            <p class="mensagem-sucesso-formulario" id="mensagem-sucesso-formulario"></p>
+
+            <button type="submit" class="botao-enviar-contato">
+              Enviar mensagem
+            </button>
+
+            <p class="texto-legenda-formulario">
+              Campos marcados com * são obrigatórios.
+            </p>
+          </form>
+        </div>
+
+        <aside class="coluna-direita-contato">
+          <article class="cartao-contato">
+            <h2 class="titulo-cartao-contato">Atendimento digital</h2>
+            <p class="texto-cartao-contato">
+              Preferimos o contato digital para garantir agilidade e registro de todas as 
+              solicitações de beneficiários, doadores, voluntários e pontos de coleta.
+            </p>
+            <ul class="lista-dados-contato">
+              <li><strong>E-mail:</strong> contato@mesasolidaria.org</li>
+              <li><strong>WhatsApp:</strong> (11) 90000-0000</li>
+            </ul>
+          </article>
+
+          <article class="cartao-contato cartao-contato-secundario">
+            <h2 class="titulo-cartao-contato">Canais oficiais</h2>
+            <p class="texto-cartao-contato">
+              Em breve, você também pode acompanhar avisos importantes, campanhas de doação 
+              e vagas de voluntariado nas nossas redes sociais.
+            </p>
+            <ul class="lista-dados-contato">
+              <li>Instagram • Mesa Solidária</li>
+              <li>LinkedIn • Mesa Solidária</li>
+              <li>Blog • Histórias de impacto</li>
+            </ul>
+          </article>
+
+          <article class="cartao-contato">
+            <h2 class="titulo-cartao-contato">Dúvidas rápidas</h2>
+            <p class="texto-cartao-contato">
+              Antes de enviar sua mensagem, você pode consultar a página de 
+              <strong>FAQ – Perguntas Frequentes</strong> com dúvidas comuns sobre cadastro 
+              de beneficiários, doadores, voluntários e pontos de coleta.
+            </p>
+            <a href="faq.html" class="link-faq-contato">
+              Acessar FAQ
+            </a>
+          </article>
+
+          <article class="cartao-contato cartao-contato-destaque">
+            <h2 class="titulo-cartao-contato">Parcerias com pontos de coleta</h2>
+            <p class="texto-cartao-contato">
+              Se sua empresa deseja ser um <strong>ponto de coleta</strong>, informe 
+              no formulário o CNPJ, endereço e horário de funcionamento. Nossa equipe 
+              entrará em contato para explicar os critérios de triagem, armazenamento 
+              e relatórios de impacto social.
+            </p>
+          </article>
+
+          <article class="cartao-contato">
+            <h2 class="titulo-cartao-contato">Tempo de resposta</h2>
+            <p class="texto-cartao-contato">
+              Respondemos as mensagens em até <strong>3 dias úteis</strong>, 
+              de acordo com a demanda de beneficiários, doadores, voluntários 
+              e pontos de coleta cadastrados.
+            </p>
+          </article>
+        </aside>
+      </section>
+    </main>
+
+      <footer class="rodape">
+    <div class="conteiner-rodape">
+      <div class="bloco-links">
+        <div class="coluna-links">
+          <a href="../../inicio.html" class="item-menu">Início</a>
+          <a href="../../Sobre/sobre.html" class="item-menu">Sobre</a>
+          <a href="../../Como_Funciona/como_funciona.html" class="item-menu">
+            Como funciona
+          </a>
+          <a href="../../Familia/familia.html" class="item-menu">Famílias</a>
+          <a href="../../doar/doar.html" class="item-menu">Doador</a>
+        </div>
+
+        <div class="coluna-links">
+          <a href="../../voluntario/voluntario.html" class="item-menu">
+            Voluntário
+          </a>
+          <a href="../../Empresa Parceira/empresa_parceira.html" class="item-menu">
+            Empresas parceiras
+          </a>
+          <a href="../../impacto/impacto.html" class="item-menu">Impacto</a>
+          <a href="../../FAQ/faq.html" class="item-menu">FAQ</a>
+          <a href="../../Contato/contato.html" class="item-menu">Contato</a>
+        </div>
+      </div>
+
+      <div class="linha-vertical"></div>
+
+      <div class="bloco-sociais">
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/FACEBOOK.png" alt="Facebook" class="icone-social" />
+        </a>
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/GOOGLE.png" alt="Google" class="icone-social" />
+        </a>
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/LINKEDIN.png" alt="LinkedIn" class="icone-social" />
+        </a>
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/X.png" alt="X" class="icone-social" />
+        </a>
+      </div>
+
+      <div class="linha-vertical"></div>
+
+      <div class="bloco-apps">
+        <button class="botao-app">
+          <img src="img/apps/apple.png" alt="Apple" class="icone-app" />
+          <span class="texto-botao-app">Baixe nosso App!</span>
+        </button>
+
+        <button class="botao-app">
+          <img src="img/apps/android.png" alt="Android" class="icone-app" />
+          <span class="texto-botao-app">Baixe nosso App!</span>
+        </button>
+      </div>
+
+      <div class="linha-vertical"></div>
+
+      <div class="bloco-logo-rodape">
+        <img src="img/logos/logo.png" alt="Mesa Solidária" class="logo-rodape" />
+        <span class="texto-logo-rodape">Mesa Solidária</span>
+      </div>
+    </div>
+  </footer>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

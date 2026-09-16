@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crie seu Cadastro - Mesa Solidária</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="img/logos/logo.png" />
+</head>
+<body>
+  <header class="cabecalho">
+      <div class="conteiner-navbar">
+        <div class="area-logo">
+          <a href="index.html">
+            <img
+              src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg"
+              alt="Logo Mesa Solidária"
+              class="imagem-logo"
+            />
+          </a>
+        </div>
+
+        <nav class="menu">
+<a href="index.html" class="item-menu">Início</a>
+          <a href="sobre.html" class="item-menu">Sobre</a>
+          <a href="comoFunciona.html" class="item-menu">Como funciona</a>
+
+          <a href="familia.html" class="item-menu">Famílias</a>
+          <a href="doador.html" class="item-menu">Doador</a>
+          <a href="voluntario.html" class="item-menu">Voluntário</a>
+          <a href="empresaParceira.html" class="item-menu"
+            >Empresas parceiras</a
+          >
+
+          <a href="impacto.html" class="item-menu">Impacto</a>
+          <a href="faq.html" class="item-menu">FAQ</a>
+          <a href="contato.html" class="item-menu">Contato</a>
+        </nav>
+
+       <div class="area-botao">
+      <a class="botao-entrar" href="login.html">Entrar</a>
+
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+  <main class="pagina-cadastro-beneficiario">
+    <section class="secao-cadastro-beneficiario">
+      <div class="cabecalho-cadastro">
+        <h1 class="titulo-cadastro">Crie seu cadastro</h1>
+        <p class="texto-cadastro" id="texto-cadastro">
+          Preencha seus dados para criar sua conta no Mesa Solidária.
+        </p>
+      </div>
+
+    
+  
+
+
+
+<form
+  id="form-cadastro-unico"
+  class="formulario-cadastro"
+  action="#"
+  method="post"
+  data-api-cadastro="http://localhost:3000/usuarios"
+  data-redirecionar="login.html"
+  novalidate
+>
+  <input type="hidden" id="tipo-endereco" name="tipoEndereco" value="RESIDENCIAL" />
+
+  <div class="bloco-formulario" id="bloco-escolha-perfil">
+    <h2 class="subtitulo-bloco">Como você deseja participar?</h2>
+
+    <div class="campo-formulario">
+      <label class="rotulo-campo" for="perfil-cadastro">Tipo de perfil</label>
+      <select
+        id="perfil-cadastro"
+        name="perfil"
+        class="entrada-campo"
+        autocomplete="off"
+        required
+      >
+        <option value="">Selecione um perfil</option>
+        <option value="BENEFICIARIO" data-perfil-opcao="BENEFICIARIO">BENEFICIÁRIO</option>
+        <option value="DOADOR" data-perfil-opcao="DOADOR">DOADOR</option>
+        <option value="VOLUNTARIO" data-perfil-opcao="VOLUNTARIO">VOLUNTÁRIO</option>
+        <option value="PONTO_COLETA" data-perfil-opcao="PONTO_COLETA">PONTO DE COLETA</option>
+      </select>
+      <span class="mensagem-erro-campo" id="erro-perfil-cadastro"></span>
+    </div>
+
+    <p class="texto-ajuda-campo">
+      Os próximos campos serão liberados de acordo com o perfil escolhido.
+    </p>
+  </div>
+
+  <div class="perfil-preselecionado" id="perfil-preselecionado" hidden>
+    <span>Perfil selecionado</span>
+    <strong id="nome-perfil-preselecionado"></strong>
+  </div>
+
+  <div class="bloco-formulario etapa-progressiva" id="bloco-dados-comuns" hidden>
+    <h2 class="subtitulo-bloco">Dados principais</h2>
+
+    <div class="linha-campos">
+      <div class="campo-formulario">
+        <label class="rotulo-campo" id="rotulo-nome-usuario" for="nome-usuario">
+          Nome completo
+        </label>
+        <input
+          type="text"
+          id="nome-usuario"
+          name="nome"
+          class="entrada-campo"
+          autocomplete="name"
+          minlength="3"
+          maxlength="100"
+          required
+          disabled
+        />
+        <span class="mensagem-erro-campo" id="erro-nome-usuario"></span>
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="email-usuario">E-mail</label>
+        <input
+          type="email"
+          id="email-usuario"
+          name="email"
+          class="entrada-campo"
+          placeholder="seuemail@exemplo.com"
+          autocomplete="email"
+          maxlength="255"
+          required
+          disabled
+        />
+        <span class="mensagem-erro-campo" id="erro-email-usuario"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bloco-formulario etapa-progressiva" id="bloco-dados-perfil" hidden>
+    <h2 class="subtitulo-bloco" id="titulo-dados-perfil">Informações do perfil</h2>
+
+    <div class="grupo-perfil" data-perfil="BENEFICIARIO" hidden>
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="cpf-beneficiario">CPF</label>
+          <input
+            type="text"
+            id="cpf-beneficiario"
+            name="cpf"
+            class="entrada-campo mascara-cpf"
+            placeholder="000.000.000-00"
+            inputmode="numeric"
+            maxlength="14"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="nascimento-beneficiario">
+            Data de nascimento
+          </label>
+          <input
+            type="date"
+            id="nascimento-beneficiario"
+            name="dataNascimento"
+            class="entrada-campo"
+            autocomplete="bday"
+            required
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="telefone-beneficiario">Telefone</label>
+          <input
+            type="tel"
+            id="telefone-beneficiario"
+            name="telefone"
+            class="entrada-campo mascara-telefone"
+            placeholder="(11) 99999-9999"
+            autocomplete="tel"
+            inputmode="numeric"
+            maxlength="15"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="quantidade-pessoas-familia">
+            Quantidade de pessoas na família
+          </label>
+          <input
+            type="number"
+            id="quantidade-pessoas-familia"
+            name="quantidadePessoasFamilia"
+            class="entrada-campo"
+            min="1"
+            step="1"
+            inputmode="numeric"
+            required
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="renda-familiar">
+          Renda familiar mensal
+        </label>
+        <input
+          type="number"
+          id="renda-familiar"
+          name="rendaFamiliar"
+          class="entrada-campo"
+          placeholder="0,00"
+          min="0"
+          step="0.01"
+          inputmode="decimal"
+          required
+          disabled
+        />
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="situacao-vulnerabilidade">
+          Situação de vulnerabilidade
+        </label>
+        <textarea
+          id="situacao-vulnerabilidade"
+          name="situacaoVulnerabilidade"
+          class="entrada-campo entrada-textarea"
+          rows="4"
+          maxlength="255"
+          placeholder="Descreva brevemente a situação familiar e a necessidade de apoio."
+          required
+          disabled
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="grupo-perfil" data-perfil="DOADOR" hidden>
+      <div class="campo-formulario">
+        <span class="rotulo-campo">Tipo de pessoa</span>
+        <div class="campo-opcoes">
+          <label class="opcao-radio" for="doador-pessoa-fisica">
+            <input
+              type="radio"
+              id="doador-pessoa-fisica"
+              name="tipoPessoa"
+              value="FISICA"
+              required
+              disabled
+            />
+            Pessoa física
+          </label>
+
+          <label class="opcao-radio" for="doador-pessoa-juridica">
+            <input
+              type="radio"
+              id="doador-pessoa-juridica"
+              name="tipoPessoa"
+              value="JURIDICA"
+              required
+              disabled
+            />
+            Pessoa jurídica
+          </label>
+        </div>
+      </div>
+
+      <div class="linha-campos" id="campos-identificacao-doador" hidden>
+        <div class="campo-formulario">
+          <label class="rotulo-campo" id="rotulo-nome-doador" for="nome-razao-social">
+            Nome do doador
+          </label>
+          <input
+            type="text"
+            id="nome-razao-social"
+            name="nomeRazaoSocial"
+            class="entrada-campo"
+            minlength="3"
+            maxlength="150"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" id="rotulo-documento-doador" for="documento-doador">
+            CPF ou CNPJ
+          </label>
+          <input
+            type="text"
+            id="documento-doador"
+            name="documento"
+            class="entrada-campo"
+            inputmode="text"
+            autocapitalize="characters"
+            required
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="campo-formulario" id="campo-telefone-doador" hidden>
+        <label class="rotulo-campo" for="telefone-doador">Telefone</label>
+        <input
+          type="tel"
+          id="telefone-doador"
+          name="telefone"
+          class="entrada-campo mascara-telefone"
+          placeholder="(11) 99999-9999"
+          autocomplete="tel"
+          inputmode="numeric"
+          maxlength="15"
+          required
+          disabled
+        />
+      </div>
+    </div>
+
+    <div class="grupo-perfil" data-perfil="VOLUNTARIO" hidden>
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="cpf-voluntario">CPF</label>
+          <input
+            type="text"
+            id="cpf-voluntario"
+            name="cpf"
+            class="entrada-campo mascara-cpf"
+            placeholder="000.000.000-00"
+            inputmode="numeric"
+            maxlength="14"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="nascimento-voluntario">
+            Data de nascimento
+          </label>
+          <input
+            type="date"
+            id="nascimento-voluntario"
+            name="dataNascimento"
+            class="entrada-campo"
+            autocomplete="bday"
+            required
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="telefone-voluntario">Telefone</label>
+          <input
+            type="tel"
+            id="telefone-voluntario"
+            name="telefone"
+            class="entrada-campo mascara-telefone"
+            placeholder="(11) 99999-9999"
+            autocomplete="tel"
+            inputmode="numeric"
+            maxlength="15"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="possui-transporte">Possui transporte?</label>
+          <select
+            id="possui-transporte"
+            name="possuiTransporte"
+            class="entrada-campo"
+            required
+            disabled
+          >
+            <option value="">Selecione</option>
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 class="subtitulo-bloco">Disponibilidade inicial</h3>
+
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="dia-semana-voluntario">Dia da semana</label>
+          <select
+            id="dia-semana-voluntario"
+            name="diaSemana"
+            class="entrada-campo"
+            required
+            disabled
+          >
+            <option value="">Selecione</option>
+            <option value="SEGUNDA">Segunda-feira</option>
+            <option value="TERCA">Terça-feira</option>
+            <option value="QUARTA">Quarta-feira</option>
+            <option value="QUINTA">Quinta-feira</option>
+            <option value="SEXTA">Sexta-feira</option>
+            <option value="SABADO">Sábado</option>
+            <option value="DOMINGO">Domingo</option>
+          </select>
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="tipo-horario-voluntario">Período</label>
+          <select
+            id="tipo-horario-voluntario"
+            name="periodo"
+            class="entrada-campo"
+            required
+            disabled
+          >
+            <option value="">Selecione</option>
+            <option value="MANHA">Manhã</option>
+            <option value="TARDE">Tarde</option>
+            <option value="NOITE">Noite</option>
+            <option value="PERSONALIZADO">Horário personalizado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="linha-campos" id="horarios-voluntario" hidden>
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="hora-inicio-voluntario">Horário inicial</label>
+          <input
+            type="time"
+            id="hora-inicio-voluntario"
+            name="horaInicio"
+            class="entrada-campo"
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="hora-fim-voluntario">Horário final</label>
+          <input
+            type="time"
+            id="hora-fim-voluntario"
+            name="horaFim"
+            class="entrada-campo"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="observacao-disponibilidade">
+          Observação sobre a disponibilidade
+        </label>
+        <textarea
+          id="observacao-disponibilidade"
+          name="observacaoDisponibilidade"
+          class="entrada-campo entrada-textarea"
+          rows="3"
+          maxlength="255"
+          placeholder="Opcional"
+          disabled
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="grupo-perfil" data-perfil="PONTO_COLETA" hidden>
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="nome-ponto">Nome do ponto de coleta</label>
+          <input
+            type="text"
+            id="nome-ponto"
+            name="nomePonto"
+            class="entrada-campo"
+            minlength="3"
+            maxlength="150"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="cnpj-ponto">CNPJ</label>
+          <input
+            type="text"
+            id="cnpj-ponto"
+            name="cnpj"
+            class="entrada-campo mascara-cnpj"
+            placeholder="AA.AAA.AAA/AAAA-AA"
+            inputmode="text"
+            autocapitalize="characters"
+            maxlength="18"
+            required
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="telefone-ponto">Telefone do ponto</label>
+          <input
+            type="tel"
+            id="telefone-ponto"
+            name="telefone"
+            class="entrada-campo mascara-telefone"
+            placeholder="(11) 99999-9999"
+            autocomplete="tel"
+            inputmode="numeric"
+            maxlength="15"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="campo-formulario">
+          <label class="rotulo-campo" for="capacidade-total">
+            Capacidade total de armazenamento
+          </label>
+          <input
+            type="number"
+            id="capacidade-total"
+            name="capacidadeArmazenamentoKg"
+            class="entrada-campo"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            placeholder="Informe a capacidade em kg"
+            required
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bloco-formulario etapa-progressiva" id="bloco-endereco" hidden>
+    <h2 class="subtitulo-bloco" id="titulo-endereco">Endereço</h2>
+
+    <div class="linha-campos">
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="cep">CEP</label>
+        <input
+          type="text"
+          id="cep"
+          name="cep"
+          class="entrada-campo mascara-cep"
+          placeholder="00000-000"
+          autocomplete="postal-code"
+          inputmode="numeric"
+          maxlength="9"
+          required
+          disabled
+        />
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="cidade">Cidade</label>
+        <input
+          type="text"
+          id="cidade"
+          name="cidade"
+          class="entrada-campo"
+          autocomplete="address-level2"
+          maxlength="100"
+          required
+          disabled
+        />
+      </div>
+    </div>
+
+    <div class="linha-campos">
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="estado">Estado</label>
+        <input
+          type="text"
+          id="estado"
+          name="estado"
+          class="entrada-campo"
+          placeholder="SP"
+          autocomplete="address-level1"
+          maxlength="2"
+          pattern="[A-Za-z]{2}"
+          required
+          disabled
+        />
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="bairro">Bairro</label>
+        <input
+          type="text"
+          id="bairro"
+          name="bairro"
+          class="entrada-campo"
+          autocomplete="address-level3"
+          maxlength="100"
+          required
+          disabled
+        />
+      </div>
+    </div>
+
+    <div class="linha-campos">
+      <div class="campo-formulario campo-maior">
+        <label class="rotulo-campo" for="logradouro">Rua / Logradouro</label>
+        <input
+          type="text"
+          id="logradouro"
+          name="logradouro"
+          class="entrada-campo"
+          autocomplete="street-address"
+          maxlength="150"
+          required
+          disabled
+        />
+      </div>
+
+      <div class="campo-formulario campo-menor">
+        <label class="rotulo-campo" for="numero">Número</label>
+        <input
+          type="text"
+          id="numero"
+          name="numero"
+          class="entrada-campo"
+          maxlength="10"
+          required
+          disabled
+        />
+      </div>
+
+      <div class="campo-formulario campo-menor">
+        <label class="rotulo-campo" for="complemento">Complemento</label>
+        <input
+          type="text"
+          id="complemento"
+          name="complemento"
+          class="entrada-campo"
+          maxlength="100"
+          placeholder="Opcional"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="bloco-formulario etapa-progressiva" id="bloco-acesso-plataforma" hidden>
+    <h2 class="subtitulo-bloco">Acesso à plataforma</h2>
+
+    <div class="linha-campos">
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="senha-usuario">Crie uma senha</label>
+        <input
+          type="password"
+          id="senha-usuario"
+          name="senha"
+          class="entrada-campo"
+          autocomplete="new-password"
+          minlength="8"
+          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}"
+          aria-describedby="ajuda-senha erro-senha"
+          required
+          disabled
+        />
+        <p class="texto-ajuda-campo" id="ajuda-senha">
+          Use pelo menos 8 caracteres, incluindo letra maiúscula, letra minúscula,
+          número e caractere especial.
+        </p>
+        <span class="mensagem-erro-campo" id="erro-senha"></span>
+      </div>
+
+      <div class="campo-formulario">
+        <label class="rotulo-campo" for="confirmacao-senha">Confirme a senha</label>
+        <input
+          type="password"
+          id="confirmacao-senha"
+          name="confirmacaoSenha"
+          class="entrada-campo"
+          autocomplete="new-password"
+          minlength="8"
+          required
+          disabled
+        />
+        <span class="mensagem-erro-campo" id="erro-confirmacao-senha"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="etapa-progressiva" id="bloco-finalizacao" hidden>
+    <div class="campo-formulario campo-termos">
+      <label class="rotulo-checkbox" for="aceite-termos">
+        <input
+          type="checkbox"
+          id="aceite-termos"
+          name="aceitouTermos"
+          value="1"
+          required
+          disabled
+        />
+        Li e aceito os Termos de Uso e a Política de Privacidade.
+      </label>
+      <span class="mensagem-erro-campo" id="erro-aceite-termos"></span>
+    </div>
+
+    <div class="rodape-formulario">
+      <button
+        type="submit"
+        class="botao-principal-cadastro botao-confirmar-cadastro"
+        id="botao-principal-cadastro"
+      >
+        Criar cadastro
+      </button>
+
+      <a href="login.html" class="botao-secundario-cadastro">
+        Já tenho cadastro
+      </a>
+    </div>
+    <p id="mensagem-status-cadastro" class="mensagem-erro-campo" role="status" aria-live="polite" aria-atomic="true"></p>
+  </div>
+</form>
+
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="conteiner-rodape">
+      <div class="bloco-links">
+        <div class="coluna-links">
+          <a href="../../inicio.html" class="item-menu">Início</a>
+          <a href="../../Sobre/sobre.html" class="item-menu">Sobre</a>
+          <a href="../../Como_Funciona/como_funciona.html" class="item-menu">Como funciona</a>
+          <a href="../../Familia/familia.html" class="item-menu">Famílias</a>
+          <a href="../../doar/doar.html" class="item-menu">Doador</a>
+        </div>
+
+        <div class="coluna-links">
+          <a href="../../voluntario/voluntario.html" class="item-menu">Voluntário</a>
+          <a href="../../Empresa Parceira/empresa_parceira.html" class="item-menu">Empresas parceiras</a>
+          <a href="../../impacto/impacto.html" class="item-menu">Impacto</a>
+          <a href="../../FAQ/faq.html" class="item-menu">FAQ</a>
+          <a href="../../Contato/contato.html" class="item-menu">Contato</a>
+        </div>
+      </div>
+
+      <div class="linha-vertical"></div>
+
+      <div class="bloco-sociais">
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/FACEBOOK.png" alt="Facebook" class="icone-social" />
+        </a>
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/GOOGLE.png" alt="Google" class="icone-social" />
+        </a>
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/LINKEDIN.png" alt="LinkedIn" class="icone-social" />
+        </a>
+        <a href="#" class="link-social">
+          <img src="img/redes-sociais/X.png" alt="X" class="icone-social" />
+        </a>
+      </div>
+
+      <div class="linha-vertical"></div>
+
+      <div class="bloco-apps">
+        <button class="botao-app">
+          <img src="img/apps/apple.png" alt="Apple" class="icone-app" />
+          <span class="texto-botao-app">Baixe nosso App!</span>
+        </button>
+
+        <button class="botao-app">
+          <img src="img/apps/android.png" alt="Android" class="icone-app" />
+          <span class="texto-botao-app">Baixe nosso App!</span>
+        </button>
+      </div>
+
+      <div class="linha-vertical"></div>
+
+      <div class="bloco-logo-rodape">
+        <img src="img/logos/logo.png" alt="Mesa Solidária" class="logo-rodape" />
+        <span class="texto-logo-rodape">Mesa Solidária</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay-confirmacao" id="overlay-confirmacao">
+    <div class="popup-confirmacao">
+      <h2 class="titulo-confirmacao">Cadastro concluído</h2>
+      <p class="texto-confirmacao">Seu cadastro foi confirmado com sucesso.</p>
+      <button type="button" class="botao-confirmacao" id="botao-confirmacao">Ok</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  
+</body>
+</html>

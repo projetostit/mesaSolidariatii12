@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo — Mesa Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="img/logos/logo.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-dashboard="ADMINISTRADOR" data-autenticacao-ativa="true">
+    <header class="cabecalho-perfil">
+      <div class="conteiner-navbar-perfil">
+        <a href="index.html" class="logo-perfil-link"><img src="img/logos/MESA SOLIDARIA - LOGO PRINCIPAL.svg" alt="Logo Mesa Solidária" class="imagem-logo-perfil" /></a>
+        <nav class="menu-perfil" aria-label="Menu administrativo">
+          <a href="#resumo" class="item-menu-perfil ativo">📊 Visão geral</a><a href="#usuarios" class="item-menu-perfil">👥 Usuários</a><a href="#operacao" class="item-menu-perfil">📦 Operação</a><a href="#alertas" class="item-menu-perfil">⚠️ Alertas</a>
+        </nav>
+        <div class="acoes-perfil"><div class="chip-usuario"><div class="avatar-chip">A</div><span>Administrador</span></div><a href="login.html" class="botao-sair-nav">Sair →</a></div>
+      </div>
+    </header>
+    <main class="pagina-dashboard">
+      <div class="boas-vindas"><div class="avatar-usuario">A</div><div class="texto-boas-vindas"><h1>Visão administrativa</h1><p>Acompanhe a operação da Mesa Solidária em um só lugar.</p></div><span class="badge-status badge-administrador">Acesso administrativo</span></div>
+      <section id="resumo" aria-labelledby="titulo-resumo"><h2 class="secao-titulo" id="titulo-resumo">Resumo geral</h2><div class="grade-resumo grade-resumo-4">
+        <div class="card-resumo destaque"><div class="label-card">Usuários ativos</div><div class="valor-card">1.248</div><div class="detalhe-card">em todos os perfis</div></div><div class="card-resumo"><div class="label-card">Famílias atendidas</div><div class="valor-card">386</div><div class="detalhe-card">no período atual</div></div><div class="card-resumo"><div class="label-card">Doações em andamento</div><div class="valor-card">74</div><div class="detalhe-card">aguardando conclusão</div></div><div class="card-resumo"><div class="label-card">Pontos de coleta</div><div class="valor-card">18</div><div class="detalhe-card">ativos na rede</div></div>
+      </div></section>
+      <div class="admin-duas-colunas" id="operacao"><section class="card-admin" aria-labelledby="titulo-operacao"><div class="admin-cabecalho-card"><h2 id="titulo-operacao">Operação recente</h2><a class="admin-link" href="#usuarios">Ver usuários</a></div><table class="tabela-historico"><thead><tr><th>Atividade</th><th>Responsável</th><th>Status</th></tr></thead><tbody><tr><td>Doação recebida no Ponto Centro</td><td>Ponto Centro</td><td><span class="tag-entregue">Concluída</span></td></tr><tr><td>Entrega para família agendada</td><td>Voluntário</td><td><span class="tag-agendado">Em andamento</span></td></tr><tr><td>Novo ponto de coleta</td><td>Mercado Bom Preço</td><td><span class="tag-pendente">Pendente</span></td></tr></tbody></table></section>
+      <section class="card-admin" id="alertas" aria-labelledby="titulo-alertas"><div class="admin-cabecalho-card"><h2 id="titulo-alertas">Alertas</h2></div><div class="admin-lista-alertas"><div class="admin-alerta">3 pontos de coleta aguardam análise de cadastro.</div><div class="admin-alerta info">12 doações precisam de um voluntário para entrega.</div><div class="admin-alerta">5 contas foram desativadas e aguardam possível reativação.</div></div></section></div>
+      <section class="card-admin" id="usuarios" aria-labelledby="titulo-usuarios"><div class="admin-cabecalho-card"><h2 id="titulo-usuarios">Gestão de usuários</h2><span class="admin-link">Prévia visual</span></div><p class="admin-legenda">A busca funciona nesta prévia. As ações de ativar, inativar e editar serão conectadas ao backend.</p><label class="sr-only" for="filtro-admin-usuarios">Buscar usuário</label><input class="admin-busca" id="filtro-admin-usuarios" type="search" placeholder="Buscar por nome, e-mail ou perfil" /><table class="tabela-historico"><thead><tr><th>Usuário</th><th>Perfil</th><th>Status</th></tr></thead><tbody><tr data-usuario-admin><td>Maria Silva<br><small>maria@email.com</small></td><td>BENEFICIÁRIO</td><td><span class="tag-entregue">Ativa</span></td></tr><tr data-usuario-admin><td>João Pereira<br><small>joao@email.com</small></td><td>DOADOR</td><td><span class="tag-entregue">Ativa</span></td></tr><tr data-usuario-admin><td>Ponto Centro<br><small>centro@ponto.com</small></td><td>PONTO DE COLETA</td><td><span class="tag-pendente">Em análise</span></td></tr><tr data-usuario-admin><td>Ana Souza<br><small>ana@email.com</small></td><td>VOLUNTÁRIO</td><td><span class="tag-inativo">Inativa</span></td></tr></tbody></table><p id="admin-sem-resultados" class="admin-sem-resultados" hidden>Nenhum usuário encontrado.</p></section>
+    </main>
+    <script src="js/script.js"></script>
+  </body>
+</html>
