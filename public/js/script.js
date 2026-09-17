@@ -28,7 +28,7 @@ const PERFIS_PUBLICOS = Object.freeze({
     nomeExibicao: "VOLUNTÁRIO",
     nome: "Nome completo",
     titulo: "Informações do voluntário",
-    endereco: "Endereço residencial", 
+    endereco: "Endereço residencial",
     tipoEndereco: "RESIDENCIAL",
     cadastro: "cadastro.html?perfil=VOLUNTARIO",
     dashboard: "dashboard_voluntario.html",
@@ -62,15 +62,17 @@ let usuarioLogado = null;
 
 function obterUsuarioDaRespostaApi(conteudo) {
   const usuario = conteudo?.usuario;
+  console.log(usuario)
   const perfilAtivoRecebido =
     conteudo?.perfil_ativo?.nome_perfil ||
     usuario?.perfil_ativo ||
     usuario?.perfilAtivo ||
-    usuario?.perfil;
+    usuario?.nome;
+
   const perfisRecebidos = Array.isArray(conteudo?.perfis)
     ? conteudo.perfis.map((perfil) =>
-        typeof perfil === "string" ? perfil : perfil?.nome_perfil,
-      )
+      typeof perfil === "string" ? perfil : perfil?.nome_perfil,
+    )
     : Array.isArray(usuario?.perfis)
       ? usuario.perfis
       : [perfilAtivoRecebido];
@@ -83,6 +85,8 @@ function obterUsuarioDaRespostaApi(conteudo) {
   ];
   const perfilAtivo = perfilAtivoRecebido || perfis[0];
   const nome = usuario?.nome_usuario || usuario?.nome || usuario?.email;
+
+  console.log(nome)
 
   if (
     !usuario ||
@@ -110,6 +114,7 @@ function aplicarUsuarioLogadoNaTela() {
 
   const nomeCompleto = usuarioLogado.nome;
   const primeiroNome = nomeCompleto.split(" ")[0];
+  console.log(primeiroNome)
   const inicial = primeiroNome.charAt(0).toUpperCase();
   const tituloBoasVindas = qs("#titulo-boas-vindas");
   const nomeChip = qs("#nome-chip");
@@ -1018,8 +1023,8 @@ function iniciarPaginaCadastro() {
     if (!resposta.ok) {
       throw new Error(
         conteudo.mensagem ||
-          conteudo.message ||
-          "Não foi possível concluir o cadastro.",
+        conteudo.message ||
+        "Não foi possível concluir o cadastro.",
       );
     }
   }
@@ -1174,6 +1179,8 @@ function iniciarTelaLogin() {
   });
 
   const parametrosLogin = new URLSearchParams(window.location.search);
+
+
 
   if (parametrosLogin.get("conta") === "inativa") {
     mostrarErro(
@@ -1378,50 +1385,115 @@ function iniciarTelaLogin() {
     const urlApi = formulario.dataset.apiLogin;
 
     if (!urlApi) {
-      throw new Error("A URL da API de login não foi configurada.");
+      throw new Error(
+        "A URL da API de login não foi configurada."
+      );
     }
+
+    // =====================================================
+    // LOGIN É FEITO SOMENTE AQUI
+    // =====================================================
 
     const resposta = await fetch(urlApi, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
       body: JSON.stringify({
         login: dadosLogin.identificador,
         senha: dadosLogin.senha,
       }),
     });
-    const conteudo = await resposta.json().catch(() => ({}));
 
-    if (resposta.status === 409 && conteudo.codigo === "CONTA_INATIVA") {
+    const conteudo =
+      await resposta.json().catch(() => ({}));
+
+    // conta inativa
+    if (
+      resposta.status === 409 &&
+      conteudo.codigo === "CONTA_INATIVA"
+    ) {
       return {
         situacao: "INATIVA",
-        usuario: obterUsuarioDaRespostaApi(conteudo),
+        usuario:
+          obterUsuarioDaRespostaApi(conteudo),
       };
     }
 
-    if (resposta.status === 401 || resposta.status === 403) {
-      throw new Error("E-mail/CPF ou senha incorretos.");
-    }
-
-    if (!resposta.ok) {
+    // login/senha incorretos
+    if (
+      resposta.status === 401 ||
+      resposta.status === 403
+    ) {
       throw new Error(
-        conteudo.mensagem ||
-          conteudo.message ||
-          "Não foi possível entrar agora.",
+        "E-mail/CPF ou senha incorretos."
       );
     }
 
-    if (typeof conteudo.access_token !== "string" || !conteudo.access_token) {
-      throw new Error("A resposta da API não contém um token de acesso.");
+    // outro erro do backend
+    if (!resposta.ok) {
+      throw new Error(
+        conteudo.mensagem ||
+        conteudo.message ||
+        "Não foi possível entrar agora."
+      );
     }
 
-    sessionStorage.setItem("access_token", conteudo.access_token);
+    // verifica se recebeu token
+    if (
+      typeof conteudo.access_token !== "string" ||
+      !conteudo.access_token
+    ) {
+      throw new Error(
+        "A resposta da API não contém um token de acesso."
+      );
+    }
+
+    // =====================================================
+    // PEGA O USUÁRIO QUE JÁ VEIO DO LOGIN
+    // =====================================================
+
+    const usuario =
+      obterUsuarioDaRespostaApi(conteudo);
+
+    // =====================================================
+    // SALVA A SESSÃO NO NAVEGADOR
+    // =====================================================
+
+    sessionStorage.setItem(
+      "access_token",
+      conteudo.access_token
+    );
+
+    sessionStorage.setItem(
+      "usuario_logado",
+      JSON.stringify(usuario)
+    );
+
+    // sessão de 1 hora
+    const umaHora =
+      60 * 60 * 1000;
+
+    const expiraEm =
+      Date.now() + umaHora;
+
+    sessionStorage.setItem(
+      "sessao_expira_em",
+      String(expiraEm)
+    );
+
+    console.log(
+      "Login realizado:",
+      usuario
+    );
 
     return {
       situacao: "ATIVA",
-      usuario: obterUsuarioDaRespostaApi(conteudo),
+      usuario,
     };
   }
-
   async function reativarConta() {
     const urlApi = formulario.dataset.apiReativar;
 
@@ -1444,8 +1516,8 @@ function iniciarTelaLogin() {
     if (!resposta.ok) {
       throw new Error(
         conteudo.mensagem ||
-          conteudo.message ||
-          "Não foi possível reativar sua conta.",
+        conteudo.message ||
+        "Não foi possível reativar sua conta.",
       );
     }
 
@@ -1641,8 +1713,8 @@ function iniciarDesativacaoConta() {
       if (!resposta.ok) {
         throw new Error(
           conteudo.mensagem ||
-            conteudo.message ||
-            "Não foi possível desativar sua conta.",
+          conteudo.message ||
+          "Não foi possível desativar sua conta.",
         );
       }
 
@@ -1663,93 +1735,158 @@ function iniciarDesativacaoConta() {
 
 // Este bloco libera cada dashboard apenas para uma sessão e um perfil compatíveis.
 async function iniciarProtecaoDashboard() {
-  const perfilEsperado = document.body.dataset.dashboard;
-  const protecaoAtiva = document.body.dataset.autenticacaoAtiva === "true";
+  const perfilEsperado =
+    document.body.dataset.dashboard;
 
-  if (!perfilEsperado || !protecaoAtiva) return true;
+  const protecaoAtiva =
+    document.body.dataset.autenticacaoAtiva ===
+    "true";
 
-  const telaVerificacao = document.createElement("div");
-  telaVerificacao.className = "tela-verificacao-sessao";
-  telaVerificacao.innerHTML = `
-    <div class="verificacao-sessao-conteudo">
-      <p id="mensagem-verificacao-sessao">Verificando sua sessão...</p>
-    </div>
-  `;
-  document.body.append(telaVerificacao);
-
-  const mensagem = qs("#mensagem-verificacao-sessao", telaVerificacao);
-
-  function redirecionarParaLogin(motivo) {
-    window.location.replace(`login.html?motivo=${encodeURIComponent(motivo)}`);
+  // página não protegida
+  if (
+    !perfilEsperado ||
+    !protecaoAtiva
+  ) {
+    return true;
   }
 
-  function mostrarErroDeVerificacao() {
-    if (!mensagem) return;
+  // =====================================================
+  // PEGA A SESSÃO JÁ CRIADA NO LOGIN
+  // =====================================================
 
-    mensagem.textContent =
-      "Não foi possível verificar sua sessão. Tente novamente.";
-    const botaoTentarNovamente = document.createElement("button");
-    botaoTentarNovamente.type = "button";
-    botaoTentarNovamente.textContent = "Tentar novamente";
-    botaoTentarNovamente.addEventListener("click", () =>
-      window.location.reload(),
+  const token =
+    sessionStorage.getItem(
+      "access_token"
     );
-    mensagem.after(botaoTentarNovamente);
+
+  const usuarioSalvo =
+    sessionStorage.getItem(
+      "usuario_logado"
+    );
+
+  const expiracao =
+    sessionStorage.getItem(
+      "sessao_expira_em"
+    );
+
+  // =====================================================
+  // NÃO EXISTE SESSÃO
+  // =====================================================
+
+  if (
+    !token ||
+    !usuarioSalvo ||
+    !expiracao
+  ) {
+    sessionStorage.clear();
+
+    window.location.replace(
+      "login.html?motivo=sessao-expirada"
+    );
+
+    return false;
   }
 
-  const token = sessionStorage.getItem("access_token");
+  // =====================================================
+  // VERIFICA APENAS O TEMPO LOCAL DA SESSÃO
+  // NÃO CHAMA A API
+  // =====================================================
 
-  console.log(token)
+  const expirou =
+    Date.now() >= Number(expiracao);
 
-  if (!token) {
-    redirecionarParaLogin("sessao-expirada");
+  if (expirou) {
+    console.log(
+      "Sessão de 1 hora encerrada."
+    );
+
+    sessionStorage.clear();
+
+    window.location.replace(
+      "login.html?motivo=sessao-expirada"
+    );
+
     return false;
   }
 
   try {
-    const resposta = await fetch(
-      "/auth/login",
-      {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      },
-    );
+    // ===================================================
+    // RECUPERA O USUÁRIO QUE VEIO DO LOGIN
+    // ===================================================
 
-    if (resposta.status === 401 || resposta.status === 403) {
-      sessionStorage.clear();
-      redirecionarParaLogin("sessao-expirada");
-      return false;
+    const usuario =
+      JSON.parse(usuarioSalvo);
+
+    if (
+      !usuario ||
+      !usuario.perfil
+    ) {
+      throw new Error(
+        "Usuário da sessão inválido."
+      );
     }
 
-    if (!resposta.ok) {
-      mostrarErroDeVerificacao();
-      return false;
-    }
-
-    const usuario = obterUsuarioDaRespostaApi(await resposta.json());
-    
     usuarioLogado = usuario;
 
-    console.log(usuarioLogado)
-    const destino = obterDashboardDoPerfil(usuario.perfil);
+    console.log(
+      "Usuário da sessão:",
+      usuarioLogado
+    );
 
-    
+    // ===================================================
+    // CONFERE SOMENTE QUAL DASHBOARD DEVE ABRIR
+    // ===================================================
 
-    if (usuario.perfil !== perfilEsperado) {
-      window.location.replace(destino);
+    if (
+      usuario.perfil !==
+      perfilEsperado
+    ) {
+      const destino =
+        obterDashboardDoPerfil(
+          usuario.perfil
+        );
+
+      if (!destino) {
+        throw new Error(
+          "Dashboard do perfil não encontrado."
+        );
+      }
+
+      window.location.replace(
+        destino
+      );
+
       return false;
     }
 
-    document.body.classList.add("autenticacao-verificada");
-    telaVerificacao.remove();
+    // ===================================================
+    // LIBERA A PÁGINA
+    // ===================================================
+
+    document.body.classList.add(
+      "autenticacao-verificada"
+    );
+
+    console.log(
+      "Dashboard liberado."
+    );
+
     return true;
   } catch (erro) {
-    mostrarErroDeVerificacao();
+    console.error(
+      "Erro ao carregar sessão:",
+      erro
+    );
+
+    sessionStorage.clear();
+
+    window.location.replace(
+      "login.html?motivo=sessao-expirada"
+    );
+
     return false;
   }
 }
-
 // esse bloco inicia somente as funções necessárias para a página aberta
 async function logout() {
   const token = sessionStorage.getItem("access_token");
@@ -1759,10 +1896,10 @@ async function logout() {
       await fetch(
         "/auth/logout",
         {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
     }
@@ -1896,10 +2033,10 @@ function iniciarSelecaoPerfil() {
       const resposta = await fetch(
         "/auth/me",
         {
-      
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
       if (resposta.status === 401 || resposta.status === 403) {
@@ -2700,13 +2837,12 @@ function iniciarDashboardDoador() {
             <div class="card-doacao-itens">${itensTexto}</div>
             ${d.obs ? `<div class="card-doacao-obs">💬 ${d.obs}</div>` : ""}
             ${d.dataReceb ? `<div class="card-doacao-receb">✅ Recebida em ${d.dataReceb}</div>` : ""}
-            ${
-              d.status === "pendente"
-                ? `<div class="card-doacao-acoes">
+            ${d.status === "pendente"
+          ? `<div class="card-doacao-acoes">
                    <button class="btn-cancelar-doacao" onclick="cancelarDoacao(${d.id})">❌ Cancelar doação</button>
                  </div>`
-                : ""
-            }`;
+          : ""
+        }`;
       container.appendChild(card);
     });
   }
@@ -3451,8 +3587,8 @@ function iniciarDashboardPonto() {
     const pendentes = doacoesPendentes.filter((d) => !d.recebida);
     const filtradas = filtro
       ? pendentes.filter((d) =>
-          d.doador.toLowerCase().includes(filtro.toLowerCase()),
-        )
+        d.doador.toLowerCase().includes(filtro.toLowerCase()),
+      )
       : pendentes;
     if (titulo)
       titulo.textContent = `Doações aguardando recebimento (${pendentes.length})`;
@@ -4099,18 +4235,18 @@ function iniciarDashboardVoluntario() {
     const idx = { pendente: 0, em_rota: 1, entregue: 2 }[status];
     return `<div class="progresso-entrega">
           ${passos
-            .map((p, i) => {
-              const cls = i < idx ? "concluido" : i === idx ? "ativo" : "";
-              const linha =
-                i < passos.length - 1
-                  ? `<div class="passo-linha${i < idx ? " concluida" : ""}"></div>`
-                  : "";
-              return `<div class="passo-entrega ${cls}">
+        .map((p, i) => {
+          const cls = i < idx ? "concluido" : i === idx ? "ativo" : "";
+          const linha =
+            i < passos.length - 1
+              ? `<div class="passo-linha${i < idx ? " concluida" : ""}"></div>`
+              : "";
+          return `<div class="passo-entrega ${cls}">
               <div class="passo-circulo">${p.icone}</div>
               <span>${p.label}</span>
             </div>${linha}`;
-            })
-            .join("")}
+        })
+        .join("")}
         </div>`;
   }
 
