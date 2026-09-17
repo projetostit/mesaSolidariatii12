@@ -28,7 +28,7 @@ const PERFIS_PUBLICOS = Object.freeze({
     nomeExibicao: "VOLUNTÁRIO",
     nome: "Nome completo",
     titulo: "Informações do voluntário",
-    endereco: "Endereço residencial",
+    endereco: "Endereço residencial", 
     tipoEndereco: "RESIDENCIAL",
     cadastro: "cadastro.html?perfil=VOLUNTARIO",
     dashboard: "dashboard_voluntario.html",
@@ -1708,7 +1708,7 @@ async function iniciarProtecaoDashboard() {
 
   try {
     const resposta = await fetch(
-      "http://localhost:3000/auth/login",
+      "/auth/login",
       {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -1757,7 +1757,7 @@ async function logout() {
   try {
     if (token) {
       await fetch(
-        "http://localhost:3000/auth/logout",
+        "/auth/logout",
         {
         method: "POST",
         headers: {
@@ -1894,7 +1894,7 @@ function iniciarSelecaoPerfil() {
 
     try {
       const resposta = await fetch(
-        "http://localhost:3000/auth/me",
+        "/auth/me",
         {
       
         headers: {
